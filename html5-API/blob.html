@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>BLOB</title>
+</head>
+<h1>BLOB</h1>
+
+<img src="" alt="target" id="target">
+
+<script>
+var b64Data = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAALNSURBVDjLjZBbSNNRHMdn0x7qQXwoyoqYS3tIJUsR8UHnFEKayXCO8Dp0mje8zLVm3vJSGpk6539azQteZt6aYmuKoQ8q3uY9LSJHqFsUJGpqpNu3v0FmGOaBLwfOOZ/P+fGlAKAclFQ/S960zHplse4M5qtoW5XxVnIfZ6ujv+8PhOO9zzK1NTTDUv1p7E15DL3oUAJ5yAnJUqsjdGo+NgYLoGtxxZLiHGZk9OVDCQg/8wL9hBor/QS2JqqxNkBgcVyFnmwH7aEEbG//iNnaJOPqZDMMc61Yn1FC3ytBVrB7yz8FEQxrXinPY0USxAARytyK4tqNSkQxP/QtAiy03YO+PQ19ZbGw519SOQltj/8lCHG9wCzleRqKAhjYm4rCeJSU5yBfmoaMR0K0valFbk8W7NIvVl0W2BzbFRRyr/Q9ifJFa2YYZutTUSfgQBLERFmkJyonUiEbE+GxJhF5miQ0vZUjQRkHlygnYlcg5dKb3vco9hWmSGGgcOwO8jVCZI8k4O5INMRD0eARoZgnfP5fWH62H6TjYigIFroCLdHNNEUb2xwPYh2ge3r9j+DI1WKxVBy3rzBbTjKKM90wnuyCzZcFMM6qsd6QhOEYe+MA73z1L9jEtSGcLdCs9X4C7je2IK1CAaGkCs+GNyGULqKRabG6QcKQsACRBfmIhi8P3dHpSZ2n0LzLOJz4jvX2OQNyZgH+MBDcC/h3AFwFyfQD3R5mMGpasXctZ5wiz02NlKkcx+3R5hIIXugRogZClEYEKIzgVBnAkgGsEgNUN07imzwMIKHvtyn4SubjLSo6vaiLFG2xm645NxE30wcR0QXwXpETKIGgdiBwZ4q8eVTzfTHEt4FORMNnsRk+hJvgNct0W+1FTaG8q4l0UWWxU5w5tUrHhBEw0qfITIOROgm3FA3o155rS5LDM0di7RvIH7U7Y5P7wg68099P+T6oezGZAe0AAAAASUVORK5CYII=";
+var byteCharacters = atob(b64Data);
+var byteNumbers = new Array(byteCharacters.length);
+for (var i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+}
+var byteArray = new Uint8Array(byteNumbers);
+var blob = new Blob([byteArray],{type: 'image/png'});
+var url = URL.createObjectURL(blob);
+document.getElementById("target").src=url;
+</script>
+	
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

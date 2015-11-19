@@ -1,0 +1,26 @@
+<!doctype html>
+<html manifest="myApp/manifest.appcache">
+<link rel="stylesheet" href="myApp/style.css" >
+<script src="myApp/logic.js"></script>
+<script src="myApp/data.js"></script>
+<script>
+window.applicationCache.addEventListener('updateready', function(e) {
+  if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+    window.applicationCache.swapCache();
+    if (confirm('A new version of this site is available. Load it?')) {
+      window.location.reload();
+    }
+  }
+}, false);
+
+onload = function() {document.getElementById("townsdiv").innerHTML=GO();}
+</script>
+<body>
+<h1>App cache</h1>
+<p>Questa applicazione di esempio serve per collaudare il meccanismo di
+Application Cache di HTML5.
+<p>Il caricamento di questa pagina comporta l'installazione in cache di una serie di file.
+Su chrome lo stato della cache può essere letto qui: <a href="chrome://appcache-internals/">cache (chrome)</a>
+<div id="townsdiv"></div>
+</body>
+</html>

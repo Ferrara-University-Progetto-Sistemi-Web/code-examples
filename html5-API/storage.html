@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<style>
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)		{ background-color:#fff; } 
+</style>
+<meta name="viewport" content="width=device-width">
+<script>
+function salva(obj) {
+var key = document.getElementById("myvar").value;
+obj.setItem(key, document.getElementById("myvalue").value);
+obj.setItem(key+"_timestamp", (new Date()).toUTCString());
+}
+
+function leggi(obj) {
+var key = document.getElementById("myvar").value;
+document.getElementById("myvalue").value = obj.getItem(key);
+document.getElementById("timestamp").innerHTML=localStorage.getItem(key+"_timestamp");
+}
+
+function viewStorage(obj) {
+	var s = "<table>";
+	for (var i=0; i < obj.length; i++) {
+		s+="<tr>";
+		s+="<td>" + obj.key(i) + "</td>";
+		s+="<td>" + obj.getItem(obj.key(i)) + "</td>";
+		var action = ((obj==localStorage)?"localStorage":"sessionStorage")+".removeItem('"+obj.key(i)+"');";
+		s+="<td><button onclick=\""+action+"\">" + action + "</button></td>";
+		s+="</tr>";
+	}
+	s += "</table>";
+	return s;
+}
+
+function report() {
+	document.getElementById("console").innerHTML = "";
+	document.getElementById("console").innerHTML += "<h4>localStorage</h4>";
+	document.getElementById("console").innerHTML += viewStorage(localStorage);
+	document.getElementById("console").innerHTML += "<h4>sessionStorage</h4>";
+	document.getElementById("console").innerHTML += viewStorage(sessionStorage);
+}
+</script>
+<body>
+<h1>storage</h1>
+<p>Esempi di utilizzo degli oggetti Storage.<br>
+Il salvataggio comporta la scrittura nello storage selezionato della coppia etichetta/valore.
+Viene anche salvato il timestamp in una seconda coppia di dati.
+<fieldset>
+<legend>crea/modifica variabile</legend>
+<input id="myvar" type=text value="" name="myvar" placeholder="specifica la chiave" required>
+<input id="myvalue" type=text value="" name="myvalue" placeholder="valore">
+<button onclick="salva(localStorage);">Salva local</button>
+<button onclick="salva(sessionStorage);">Salva session</button>
+</fieldset>
+<fieldset>
+<legend>monitor</legend>
+<div id="timestamp"></div><br>
+<button onclick="leggi(localStorage);">Leggi local</button>
+<button onclick="leggi(sessionStorage);">Leggi session</button>
+<button onclick="report();">Mostra storage</button>
+<button onclick="localStorage.clear();">Reset Local</button>
+<button onclick="sessionStorage.clear();">Reset Session</button>
+</fieldset>
+<div id="console"></div>
+
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

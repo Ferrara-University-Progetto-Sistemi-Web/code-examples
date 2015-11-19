@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<meta name="viewport" content="width=device-width">
+<script>
+function myvibrate(args) {
+	if (window.navigator.vibrate) window.navigator.vibrate(args);
+	else alert("il dispositivo non supporta la vibrazione");
+}
+</script>
+<body>
+<h1>Vibrazione</h1>
+<button onclick="myvibrate(500);">Vibrate</button>
+<button onclick="myvibrate([500, 100, 500]);">Vibrate 2 times</button>
+<button onclick="myvibrate([100, 100, 500, 100,1000]);">Vibrate 3 times</button>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

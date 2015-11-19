@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<style>
+#console {font-size: 2em}
+td, input{font-size: 2em}
+</style>
+</head>
+<body>
+<h1>Device Orientation</h1>
+<script>
+window.addEventListener('deviceorientation', function(event) {
+  var alpha = event.alpha;
+  var beta = event.beta;
+  var gamma = event.gamma;
+  //if (abs(parseInt(document.getElementById("alpha").value)-alpha)>0) document.getElementById("alpha").value=alpha;
+  document.getElementById("alpha").value=Math.round(alpha);
+  document.getElementById("beta").value=Math.round(beta);
+  document.getElementById("gamma").value=Math.round(gamma);
+}, false);
+
+var amax=10;
+if(window.DeviceMotionEvent) {
+	window.addEventListener('devicemotion', function(event) {
+	  var x = event.accelerationIncludingGravity.x;
+	  var y = event.accelerationIncludingGravity.y;
+	  var z = event.accelerationIncludingGravity.z;
+	  var r = event.rotationRate;
+	  var a = Math.round(Math.sqrt(x*x+y*y+z*z));
+	  var html = 'Acceleration:' + a +'(max: <b>'+ amax + '</b>)<br />';
+	  html += 'x: ' + x +'<br />y: ' + y + '<br/>z: ' + z+ '<br />';
+	  html += 'Rotation rate:<br />';
+	  if(r!=null) html += 'alpha: ' + r.alpha +'<br />beta: ' + r.beta + '<br/>gamma: ' + r.gamma + '<br />';
+	  document.getElementById("console").innerHTML = html;                  
+	  if (a > amax) {
+	  	amax=a;
+	  	if (window.navigator.vibrate) window.navigator.vibrate(1000);
+	  }
+	});
+}
+
+
+</script>
+<form>
+<table style="width: device-width">
+<tr><td colspan="3"><img src="img/device-alpha-beta-gamma.png" style="width: device-width"></td></tr>
+<tr>
+<td>alpha<br><input type="text" name="alpha" id="alpha" value="0" size="5"></td>
+<td>beta<br><input type="text" name="beta" id="beta" value="0" size="5"></td>
+<td>gamma<br><input type="text" name="gamma" id="gamma" value="0" size="5"></td>
+</tr>
+</table>
+<div id="console"></div>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

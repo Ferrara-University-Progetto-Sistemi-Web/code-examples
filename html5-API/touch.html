@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>iPhone Multitouch</title>
+<meta name="viewport" content="width=device-width; initial-scale=1.0;
+maximum-scale=1.0; user-scalable=0;">
+<style>
+.point {
+width: 20px;
+height: 20px;
+position: absolute;
+-webkit-border-radius: 10px;
+background-color: blue;
+}
+#container {background-color:red; width: 300px; height: 300px}
+</style>
+<h1>Touch event</h1>
+<p>Il quadrato rosso è sensibile al touch.
+<script>
+function touch(event) {
+	event.preventDefault();
+	for (var i=0; i<event.touches.length; i++) {
+		var top = event.touches[i].pageY-10;
+		var left = event.touches[i].pageX-10;
+		var html = "<div class='point' style='left: " + left + "px ; top: " + top + "px'></div>";
+		document.getElementById("container").innerHTML += html;
+	}
+	logEvents("touch",event);
+}
+function clean(event) {
+	document.getElementById("container").innerHTML = "";
+	logEvents("touchend",event);
+}
+
+function move(event) {
+	document.getElementById("container").innerHTML = "";
+	logEvents("touchchanged",event);
+}
+
+function logEvents(name,event) {
+	var html = name + "<br>";
+	for (var i=0;i<event.touches.length;i++) {
+		html += logTouch(event.touches[i]);
+	}
+	document.getElementById("console").innerHTML += html;
+} 
+
+function logTouch(t) {
+	var html = "";
+	html += "[" + t.identifier + "] at ";
+	html += "(" + t.pageX;
+	html += "," + t.pageY + ")";
+	html += t.target.id + "<br>";
+	return html;
+}
+</script>
+</head>
+<body>
+<div ontouchstart="touch(event)" ontouchend="clean(event)" ontouchmove="move(event)" id="container"></div>
+<div id="console"></div>
+<script src="../supporto/progettoweb.js"></script>
+
+</body>
+</html>

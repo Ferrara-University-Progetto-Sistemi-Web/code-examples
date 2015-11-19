@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<body>
+<h1>Speech Recognition</h1>
+<textarea id="result" rows=10 cols=80></textarea><br>
+<button id="button" onclick="recognition.start();">start</button>
+
+<script>
+var recognition = new webkitSpeechRecognition();
+recognition.onresult = function(event) {
+	if (event.results.length > 0) {
+		for (var i=0; i< event.results.length; i++) {
+			for (var j=0; j< event.results[i].length; j++) {
+				document.getElementById("result").value += event.results[i][0].transcript;
+				document.getElementById("result").value += ' [' + event.results[i][0].confidence + ']\n';
+			}
+		}
+
+	}
+}
+</script>
+<script src="../supporto/progettoweb.js"></script>	
+</body>
+</html>

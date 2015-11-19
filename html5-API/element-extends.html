@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<title>Custom Element</title>
+<meta charset="utf-8">
+
+<script>	
+	var SecureButtonPrototype = Object.create(HTMLButtonElement.prototype);
+	SecureButtonPrototype.createdCallback = function () {
+		this.addEventListener('click', function(e) {
+    var ok = confirm('Sei sicuro?!');
+  });
+	}
+	document.registerElement('secure-button', { 
+		prototype: SecureButtonPrototype,
+		extends: 'button'});
+</script>
+</head>
+<body>
+<h1>Custom Element (estensione)</h1>
+Esempio basato sulla generazione dell'elemento via javascript.
+<button is="secure-button" >Invia</button>
+
+<br><br>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

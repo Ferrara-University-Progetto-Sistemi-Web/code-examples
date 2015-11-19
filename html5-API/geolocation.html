@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<body>
+<script>
+function localizzami() {
+	window.navigator.geolocation.getCurrentPosition(userLocated,locationError);
+}
+
+function userLocated(position) {
+	var latitude = position.coords.latitude;
+	var longitude = position.coords.longitude;
+	var timeOfLocation = position.timestamp;
+	
+	alert("le tue coordinate sono: " + latitude + ", " + longitude);
+}
+
+function locationError() {
+	alert(error.code);
+}
+</script>
+<h1>navigator.geolocation</h1>
+<button onclick="localizzami();">Localizzami</button>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

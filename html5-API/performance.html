@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Performace API</title>
+</head>
+<h1>Performace API</h1>
+	<input type="button" onclick="logtimes();" value="mostra tempi">
+	<input type="button" onclick="mymark();" value="salva markatempo">
+	<input type="button" onclick="logmarks();" value="mostra markature">
+	<img src="img/timing-overview.png" alt="schema eventi di pagina" width="50%">
+	<div id=report></div>
+	<script type="text/javascript">
+		var m=0;
+		
+		function logtimes() {
+			var html = "<table>"; 
+			var t0=window.performance.timing.navigationStart;
+			for (lbl in window.performance.timing) {
+				if (typeof window.performance.timing[lbl] != "function") {
+					if (window.performance.timing[lbl]!=0)
+					html += '<tr>'+td(lbl) + td(window.performance.timing[lbl]) + td(window.performance.timing[lbl]-t0)+'</tr>';					
+				}
+			}
+			html += '</table>';
+			document.getElementById("report").innerHTML = html;
+		}
+		
+		function mymark() {
+			window.performance.mark('markatore'+m);
+			window.performance.measure('measure'+m,'navigationStart','markatore'+m);
+			m++;
+		}
+		
+		function logmarks() {
+			var html="";
+			for (var i=0; i< window.performance.getEntriesByType('mark').length;i++) {
+				html += window.performance.getEntriesByType('mark')[i].name +': '+ window.performance.getEntriesByType('mark')[i].duration+'<br>';
+			}
+			for (var i=0; i< window.performance.getEntriesByType('measure').length;i++) {
+				html += window.performance.getEntriesByType('measure')[i].name +': '+ window.performance.getEntriesByType('measure')[i].duration+'<br>';
+			}
+			document.getElementById("report").innerHTML = html;
+		}
+		
+		function td(s) {return '<td>'+s+'</td>';}
+	</script>	
+	
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

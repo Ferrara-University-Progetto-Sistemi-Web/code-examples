@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="description" content="Web Components - Shadow DOM: Esempio" />
+  <meta charset="utf-8">
+  <title>Web Components - Template: Sample</title>
+  <style>
+  img {width:150px}
+	#host {border: 1px dotted #999}
+  </style>
+  <template id="template">
+    <style>
+      @keyframes roll {
+        0% {transform: rotateY(0deg)}
+        100% {transform: rotateY(360deg)}
+      }
+      img {
+				width: 50px;
+        transform-style: preserve-3d;
+        animation: roll 2s infinite linear;
+      }
+      #container {
+        perspective: 800px;
+        font-family: sans-serif;
+      }
+    </style>
+    <div id="container">
+      <img src="img/shadow-dom.png">
+      <content select="h2"></content>
+    </div>
+  </template>
+  
+	<script>
+	function attivaShadow() {
+		var host = document.querySelector('#host');
+		var root = host.createShadowRoot();
+
+		var template = document.querySelector('#template');
+		var clone = document.importNode(template.content, true);
+		root.appendChild(clone);
+	}
+	</script>
+</head>
+<body>
+	<h1>Esempio shadow DOM</h1>
+	<img src="./img/shadow-dom.png">
+	<div id="host">
+    <h2>Il DIV che mi contiene è uno Shadow DOM</h2>
+		<p>Una volta attivato il suo contenuto diventa inaccessibile.
+		Il suo contenuto non influenza gli elementi esterni (come la prima immagine).
+  </div>
+  
+  <button onclick="attivaShadow()">Attiva Shadow</button>
+  <p>
+  <ul>
+  <li>Lo stile della pagina non influenza quello dello shadow DOM
+  <li>Lo stile dello shadow DOM non influenza quello della pagina
+  </ul>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

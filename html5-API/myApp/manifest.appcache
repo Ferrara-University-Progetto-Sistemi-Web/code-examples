@@ -1,0 +1,13 @@
+CACHE MANIFEST
+# version 1.0.5
+
+CACHE:
+logic.js
+style.css
+background.png
+data.js
+
+NETWORK:
+*
+
+FALLBACK:

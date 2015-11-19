@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+</head>
+
+<h1>Esempio Ajax</h1>
+<p>La pagina interroga un web service via ajax inviando i dati personali per ricevere in risposta un file XML contenente il codice fiscale.
+<script>
+function calcolaCodiceFiscale() {
+	var f=document.getElementById("theForm");
+	var url="http://webservices.dotnethell.it";
+	url += "/codicefiscale.asmx/CalcolaCodiceFiscale?";
+	url += "Nome=" + f.Nome.value;
+	url += "&Cognome=" + f.Cognome.value;
+	url += "&DataNascita=" + f.DataNascita.value;
+	url += "&ComuneNascita=" + f.ComuneNascita.value;
+	url += "&Sesso=" + f.Sesso.value;
+	
+	var request = new XMLHttpRequest(); // Create new request
+	request.open("GET", url); // definisce l'URL da inviare
+	//ad ogni cambio di stato verifichiamo se il trasferimento è completo
+	request.onreadystatechange = function() { 
+			// 4 - trasferimento completato
+			if (request.readyState === 4)  {
+				if (request.status === 200) {
+					mylog("arrivata la risposta");
+					var type = request.getResponseHeader("Content-Type");
+					if (type.match(/^text/)) setCF(request.responseText); 
+				} else {
+					mylog("problemi " + request.status);
+					mylog(request.responseText);
+				}
+		} else {
+			mylog("waiting ... " + request.readyState);
+		}
+	};
+	request.send(null); 
+	mylog("invio richiesta..." + url);
+	
+}
+
+function setCF(text) {
+	var parser=new DOMParser();
+	var xmlDoc=parser.parseFromString(text,"text/xml");
+	document.getElementsByName("CodiceFiscale")[0].value= (xmlDoc.getElementsByTagName("string")[0].childNodes[0].nodeValue);
+}
+</script>
+
+<form id="theForm" name="theForm">
+<input type="text" name="Nome" value="Paolo" placeholder="nome"><br>
+<input type="text" name="Cognome" value="Rossi" placeholder="cognome"><br>
+<input type="text" name="DataNascita" value="25/08/1980" placeholder="data di nascita"><br>
+<input type="text" name="ComuneNascita" value="BOLOGNA" placeholder="comune di nascita"><br>
+<input type="text" name="Sesso" value="M" placeholder="sesso"><br>
+
+<input type="text" name="CodiceFiscale" ><input type="button" value="Calcola" onclick="calcolaCodiceFiscale();">
+</form>
+<script src="../supporto/progettoweb.js"></script>
+</html>

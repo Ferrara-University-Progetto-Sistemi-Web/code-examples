@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<title>Custom Element</title>
+<meta charset="utf-8">
+
+<script>	
+	var XFooPrototype = Object.create(HTMLElement.prototype);
+	XFooPrototype.createdCallback = function () {
+		var h2 = document.createElement('h2');
+		var p = document.createElement('p');
+		var img = document.createElement('img');
+		var text = this.textContent;
+		
+		var shadow = this.createShadowRoot();
+		
+		this.textContent = "";
+		h2.textContent=this.getAttribute('data-title');
+		p.textContent=text;
+		img.src=this.getAttribute('data-img');
+		img.width='100'; img.height='100';
+		shadow.appendChild(h2);
+		shadow.appendChild(p);
+		shadow.appendChild(img);
+	}
+	document.registerElement('x-foo2', { prototype: XFooPrototype});
+</script>
+</head>
+<body>
+<h1>Custom Element</h1>
+Esempio basato sulla generazione dell'elemento via javascript.<br>
+Rispetto all'esempio di base il nuovo elemento è costruito all'interno di uno shadow DOM:
+il suo dettaglio non è visibile.
+<x-foo2 data-title='Opla' data-img='./img/logocorso.png'>Eccoci finalmente qui</x-foo2>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

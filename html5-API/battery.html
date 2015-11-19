@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+
+  <title>Battery Status API Example</title>
+  <script>
+		if (!navigator.getBattery) document.write("BatteryManager not available!");
+    else window.onload = function () {
+
+      navigator.getBattery().then(function(battery) {
+        // aggiorna lo stato della batteria
+        updateBatteryStatus(battery);
+        // aggiorna cambiamenti di stato sul caricamento
+        battery.onchargingchange = function () {
+          updateBatteryStatus(battery);
+        };
+				// aggiorna se cambia il livello della batteria
+        battery.onlevelchange = function () {
+          updateBatteryStatus(battery);
+        };
+
+        battery.ondischargingtimechange = function () {
+          updateBatteryStatus(battery);
+        };
+        battery.onchargingtimechange = function () {
+          updateBatteryStatus(battery);
+        };
+      });
+			
+			function updateBatteryStatus(battery) {
+        document.querySelector('#charging').textContent = battery.charging ? 'charging' : 'not charging';
+        document.querySelector('#level').textContent = 100*battery.level;
+        document.querySelector('#dischargingTime').textContent = battery.dischargingTime / 60;
+        document.querySelector('#chargingTime').textContent = battery.chargingTime / 60;
+      }
+
+    };
+  </script>
+</head>
+<body>
+<h1>GetBattery</h1>
+  In carica: <span id="charging">(charging state unknown)</span><br>
+  Livello: <span id="level">(battery level unknown)</span>%<br>
+  Durata residua: <span id="dischargingTime">(discharging time unknown)</span><br>
+  Tempo per la ricarica: <span id="chargingTime">(charging time unknown)</span><br>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

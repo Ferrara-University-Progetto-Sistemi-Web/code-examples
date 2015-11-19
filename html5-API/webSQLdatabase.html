@@ -1,0 +1,99 @@
+<html>
+<head>
+<style>
+table.datatable, table.datatable td {border-collapse: collapse; border: 1px solid black;}
+table.datatable td {padding: 5px}
+table.datatable tr:nth-child(even) {background: #dedede}
+</style>
+<script>
+var db;
+if (window.openDatabase)
+	db= openDatabase('DBprova', '1.0', 'Database di prova', 2 * 1024 * 1024);
+else
+	document.write("Web SQL database not implemented. Riapri su Safari o Chrome");
+
+function insertRecord(id,x) {
+	db.transaction(function (tx) {
+	  tx.executeSql('CREATE TABLE IF NOT EXISTS foo (id unique, text)');
+	  tx.executeSql('INSERT INTO foo (id, text) VALUES (?, ?)', [id, x], function () {
+	  	document.getElementById("output").innerHTML+="added elements";
+	  }, function () {
+	  	document.getElementById("output").innerHTML+="insert failed";
+	  });
+
+	});
+}
+
+function maxId(field) {
+	var res;
+	db.transaction(function (tx) {
+		tx.executeSql('SELECT * FROM foo', [], 
+		function (tx, results) {
+		   field.value= results.rows.length+1;
+		   //alert(results.rows.length);
+		},
+		function (tx, err) {
+  		//alert(err.message);
+  	});	
+	});
+}
+
+function deleteAllItems() {
+	alert(id);
+	db.transaction(function (tx) {
+		tx.executeSql('DELETE FROM foo ', [], 
+		function (tx, results) {
+		   alert(results.rows.length);
+		},
+		function (tx, err) {
+  		alert(err.message);
+  	});	
+	});
+}
+
+function deleteItem(id) {
+	alert(id);
+	db.transaction(function (tx) {
+		tx.executeSql("DELETE FROM foo WHERE id = '?'", [id], 
+		function (tx, results) {
+		   alert(results.rows.length);
+		},
+		function (tx, err) {
+  		alert(err.message);
+  	});	
+	});
+}
+
+function updateList() {
+	var html="";
+	db.transaction(function (tx) {
+		tx.executeSql('SELECT * FROM foo', [], function (tx, results) {
+		  var len = results.rows.length;
+		  for (var i = 0; i < len; i++) {
+		  	html += "<tr>";
+		  	html += "<td>" + (results.rows.item(i).id)+'</td>';
+		  	html += "<td>" + (results.rows.item(i).text)+'</td>';
+		  	html += "<td>" + "<a onclick='deleteItem(" +results.rows.item(i).id + ");'>delete</a></td>";
+		  	html += "</tr>";
+		  	
+		  }
+		  document.getElementById("output").innerHTML="<table class='datatable'>" + html + "</table>";
+		});	
+	});	
+}
+</script>
+</head>
+<body>
+<h1>Web SQL Database</h1>
+<form>
+id: <input type="text" value="" name="newid" onclick="maxId(this);"><br>
+text: <input type="text" value="" name="newval"><br>
+<input type="button" onclick="insertRecord(this.form.newid.value,this.form.newval.value);" value="Inserisci"><br>
+<input type="button" onclick="updateList();" value="Visualizza Dati">
+</form>
+<div id="output"></div>
+
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

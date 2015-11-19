@@ -1,0 +1,31 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Web Notification</title>
+</head>
+<h1>Web Notification</h1>
+	<input type="button" onclick=showNotification(); value="mostra notifica">
+	<script type="text/javascript">
+		var notification;
+		function showNotification() {
+			if(window.Notification) {
+				Notification.requestPermission(function(status) { 
+					console.log('Status: ', status); 
+					notification = new Notification('Ecco la nostra prima notifica', { 
+						icon: '/html5-API/img/logocorso.png', 
+						body: 'Questo è il corpo del messaggio. Potrebbe anche essere molto lungo' }); 
+					notification.addEventListener("click",function () {alert("click!")});
+					notification.addEventListener("show",function () {setTimeout(notification.close, 15000)});
+				});
+			}
+			else {
+				alert('Your browser doesn\'t support notifications.');
+			}
+		}
+	</script>	
+	
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

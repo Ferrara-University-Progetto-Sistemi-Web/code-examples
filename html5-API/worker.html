@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Web Worker</title>
+<meta name="viewport" content="width=device-width,user-scalable=no">
+
+</head>
+<body>
+<h1>Semplice Web Worker</h1>
+<script id="workercode" type="javascript/worker">
+		self.onmessage = function(e) {
+      if (e.data=='STOP')
+				self.close();
+			else
+				self.postMessage('msg from worker'+e.data);
+    };
+</script>
+<script>
+var blob = new Blob([document.querySelector('#workercode').textContent]);
+
+var worker = new Worker(window.URL.createObjectURL(blob));
+
+worker.addEventListener("message",function(e) {mylog("worker said:" + e.data)});
+
+
+</script>
+<form>
+<input name="msg" placeholder="testo per il worker">
+<input type="button" onclick="worker.postMessage(this.form.msg.value)" value="send message to the worker"><br><br>
+<input type="button" onclick="worker.postMessage('STOP')" value="ask worker to stop">
+</form>
+<br><br>
+<pre><code class="language-js">
+&lt;script id="workercode" type="javascript/worker">
+		self.onmessage = function(e) {
+      if (e.data=='STOP')
+				self.close();
+			else
+				self.postMessage('msg from worker'+e.data);
+    };
+&lt;/script>
+&lt;script>
+var blob = new Blob([document.querySelector('#workercode').textContent]);
+
+var worker = new Worker(window.URL.createObjectURL(blob));
+
+worker.addEventListener("message",function(e) {mylog("worker said:" + e.data)});
+
+
+&lt;/script>
+</code></pre>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

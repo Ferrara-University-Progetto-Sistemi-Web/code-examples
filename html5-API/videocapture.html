@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+
+<style>
+video, img {
+  width: 307px;
+  height: 250px;
+  background: rgba(255,255,255,0.5);
+  border: 1px solid #ccc;
+}
+.blur {
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+}
+.brightness {
+  -webkit-filter: brightness(5);
+  -moz-filter: brightness(5);
+  -o-filter: brightness(5);
+  -ms-filter: brightness(5);
+  filter: brightness(5);
+}
+.contrast {
+  -webkit-filter: contrast(8);
+  -moz-filter: contrast(8);
+  -o-filter: contrast(8);
+  -ms-filter: contrast(8);
+  filter: contrast(8);
+}
+.hue-rotate {
+  -webkit-filter: hue-rotate(90deg);
+  -moz-filter: hue-rotate(90deg);
+  -o-filter: hue-rotate(90deg);
+  -ms-filter: hue-rotate(90deg);
+  filter: hue-rotate(90deg);
+}
+.hue-rotate2 {
+  -webkit-filter: hue-rotate(180deg);
+  -moz-filter: hue-rotate(180deg);
+  -o-filter: hue-rotate(180deg);
+  -ms-filter: hue-rotate(180deg);
+  filter: hue-rotate(180deg);
+}
+.hue-rotate3 {
+  -webkit-filter: hue-rotate(270deg);
+  -moz-filter: hue-rotate(270deg);
+  -o-filter: hue-rotate(270deg);
+  -ms-filter: hue-rotate(270deg);
+  filter: hue-rotate(270deg);
+}
+.saturate {
+  -webkit-filter: saturate(10);
+  -moz-filter: saturate(10);
+  -o-filter: saturate(10);
+  -ms-filter: saturate(10);
+  filter: saturate(10);
+}
+.grayscale {
+  -webkit-filter: grayscale(1);
+  -moz-filter: grayscale(1);
+  -o-filter: grayscale(1);
+  -ms-filter: grayscale(1);
+  filter: grayscale(1);
+}
+.sepia {
+  -webkit-filter: sepia(1);
+  -moz-filter: sepia(1);
+  -o-filter: sepia(1);
+  -ms-filter: sepia(1);
+  filter: sepia(1);
+}
+.invert {
+  -webkit-filter: invert(1);
+  -moz-filter: invert(1)
+  -o-filter: invert(1)
+  -ms-filter: invert(1)
+  filter: invert(1)
+}
+</style>
+</head>
+<body>
+<h1>VideoCapture mediante getUserMedia</h1>
+<p>Esempio di utilizzo della cattura di audio e video dal navigator
+mediante navigator.getUserMedia().
+Attivabile solo su http (non funziona su collegamento locale).
+<p>
+<input type="button" onclick="avvia();" value="avvia" >
+<input type="button" onclick="snapshot();" value="snapshot!" >
+<input type="button" onclick="changeFilter(this);" value="filter me!" >
+<input type="button" onclick="mylog(localMediaStream+' = '+JSON.stringify(localMediaStream));" value="log" >
+<br>
+<figure style="float: left">
+<video id='thevideo' autoplay></video>
+<figcaption>Riproduzione del video</figcaption>
+</figure>
+<img style="float: left" src="" alt="snapshot">
+<canvas style="display:none;"></canvas>
+
+<br style="clear:both">
+
+<script>
+	var localMediaStream = null;
+	
+  if (!navigator.getUserMedia) { 
+		if (navigator.webkitGetUserMedia) navigator.getUserMedia = navigator.webkitGetUserMedia;
+		else if(navigator.mozGetUserMedia) navigator.getUserMedia = navigator.mozGetUserMedia;
+		else if(navigator.mGetUserMedia) navigator.getUserMedia = navigator.mGetUserMedia;
+		else document.write ("navigator.getUserMedia is not available or implemented")
+	}	
+	
+	var onFailSoHard = function(e) {
+    console.log('Reeeejected!', e);
+  };
+
+	function onSuccessVideo (stream) {
+	  var video = document.querySelector('video');
+    video.src = window.URL.createObjectURL(stream);
+		localMediaStream = stream;
+
+	}
+  
+	function avvia() {
+		navigator.getUserMedia({video: true, audio: true}, onSuccessVideo, onFailSoHard);
+	}
+	
+	function snapshot() {
+    var canvas = document.querySelector('canvas');
+		var video = document.querySelector('video');
+		var ctx = canvas.getContext('2d');
+		if (localMediaStream) {
+      ctx.drawImage(video, 0, 0);
+      // "image/webp" works in Chrome.
+      // Other browsers will fall back to image/png.
+      document.querySelector('img').src = canvas.toDataURL('image/webp');
+    }
+  }
+	
+var idx = 0;
+var filters = ['grayscale', 'sepia', 'blur', 'brightness',
+               'contrast', 'hue-rotate', 'hue-rotate2',
+               'hue-rotate3', 'saturate', 'invert', ''];
+							 
+function changeFilter(btn) {
+  var el = document.getElementById('thevideo');
+  el.className = '';
+  var effect = filters[idx++ % filters.length]; // loop through filters.
+  if (effect) {
+    el.classList.add(effect);
+		btn.value=effect;
+  }
+}							 
+</script>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

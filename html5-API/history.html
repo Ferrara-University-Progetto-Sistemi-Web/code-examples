@@ -1,0 +1,105 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Sample History</title>
+  <style>
+	#container {width: 600px; margin: auto;}
+	.page {width: 500px; height: 700px; border: 1px solid #333; background: #dedede; margin: auto; display: none}
+	nav { display:block; float:right; width:45%; }
+	ul { list-style:none; padding:0; margin:0; }
+	li { display:inline-block; padding:0; border-right:solid 1px #aaa; margin:.5em 0 0; }
+	li:last-child { border-right:0; }
+  </style>
+</head>
+
+<body class="cf">
+	<div id="container">
+  <h1>Multipage</h1>
+
+  <nav>
+    <ul class="cf">
+      <li><a href="/history/home">home</a></li>
+      <li><a href="/history/about">about</a></li>
+      <li><a href="/history/info">info</a></li>
+      <li><a href="/history/buy">buy</a></li>
+      <li><a href="/history/contact">contact</a></li>
+    </ul>
+  </nav>
+
+	<hr style="clear: both">
+	Questo testo viene resettato ogni volta che si cambia pagina.<br>
+	<textarea cols=80 name="comment" id="comment"></textarea>
+	
+	<section id="home" class="page">
+		<h2>Home page</h2>
+		<p>Benvenuti...
+	</section>	<section id="about" class="page">
+		<h2>About page</h2>
+		<p>La nostra azienda...
+	</section>
+	<section id="info" class="page">
+		<h2>Info page</h2>
+		<p>Per info ...
+	</section>
+	<section id="buy" class="page">
+		<h2>Buy page</h2>
+		<p>Questo è il nostro catalogo...
+	</section>
+	<section id="contact" class="page">
+		<h2>Contact page</h2>
+		<p>Contattaci su ....
+	</section>
+	
+	</div>
+  <script>
+		var step=0;
+    // gestione click sugli hyperlink
+    for (var i = 0, l = document.getElementsByTagName('a').length; i < l; i++) {
+      document.getElementsByTagName('a')[i].addEventListener('click', clickHandler, true);
+    }
+
+		function loadPage(url) {
+			var page = url.split('/').pop();			
+			// gestiamo la navigazione fra le pagine visualizzando solo quella richiesta.
+			for (var i = 0, l = document.getElementsByClassName('page').length; i < l; i++) {
+				document.getElementsByClassName('page')[i].style.display='none';
+			}      
+			document.getElementById(page).style.display='block';
+		}
+
+    // controller della pagina. Gestisce la navigazione 
+    function clickHandler(event) {
+			step++;
+			var data = new Object();
+      
+			
+      data.comment=document.getElementById("comment").value;
+			data.page=event.target.getAttribute('href');
+			data.step=step;
+			document.getElementById("comment").value="";
+      loadPage(event.target.getAttribute('href'));
+			
+			// Viene aggiunto lo stato alla history
+      history.pushState(data, event.target.textContent, event.target.href);
+			
+			// viene bloccato il gestore di default dell'evento
+      return event.preventDefault();
+    }
+
+
+    // torniamo allo stato precedente salvato nella history
+    window.addEventListener('popstate', function(event) {
+      console.log('richiamato dalla history lo stato: ' + event.state.step);
+      document.getElementById("comment").value = event.state.comment;
+			loadPage(event.state.page);
+    });
+		
+
+
+  </script>
+<script src="../supporto/progettoweb.js"></script>
+	</body>
+
+</html>

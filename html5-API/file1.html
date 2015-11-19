@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>File API</title>
+</head>
+<h1>File API - INPUT</h1>
+<h2>Selezione di file mediante campo INPUT</h2>
+<form>
+<input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+</form>
+
+
+<script>
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+</script>
+	
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

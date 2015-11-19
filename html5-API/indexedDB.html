@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<style>
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)		{ background-color:#fff; } 
+</style>
+</head>
+<body>
+<h1>indexDB</h1>
+<script>
+var request = indexedDB.open("library");
+
+// evento attivato se il database non esiste
+request.onupgradeneeded = function() {
+  // Se il database non esiste, viene creato e vengono definite le chiavi
+  var db = request.result;
+  var store = db.createObjectStore("books", {keyPath: "isbn"});
+  var titleIndex = store.createIndex("by_title", "title", {unique: true});
+  var authorIndex = store.createIndex("by_author", "author");
+
+  // Inserimento dei dati iniziali
+  store.put({title: "Quarry Memories", author: "Fred", isbn: 123456});
+  store.put({title: "Water Buffaloes", author: "Fred", isbn: 234567});
+  store.put({title: "Bedrock Nights", author: "Barney", isbn: 345678});
+};
+
+request.onsuccess = function() {
+  db = request.result;
+}
+
+
+function readAll(searchstring) {
+	var tx = db.transaction("books", "readonly");
+	var store = tx.objectStore("books");
+	var index = store.index("by_author");
+	var request;
+	if( searchstring != "") request = index.openCursor(IDBKeyRange.only(searchstring));
+	else request = index.openCursor();
+	
+	var html="<table>";
+	html += "<tr>";
+	html += "<th>ISBN</th>";
+	html += "<th>TITLE</th>";
+	html += "<th>AUTHOR</th>";
+	html += "</tr>";
+	request.onsuccess = function() {
+		var cursor = request.result;
+	  if (cursor) {
+	    // Called for each matching record.
+	    //report(cursor.value.isbn, cursor.value.title, cursor.value.author);
+	    html += "<tr>";
+	    html += "<td>"+cursor.value.isbn+"</td>";
+	    html += "<td>"+cursor.value.title+"</td>";
+	    html += "<td>"+cursor.value.author+"</td>";
+	    html += "</tr>";
+	    cursor.continue();
+	  } else {
+	    // No more matching records.
+	    //report(null);
+	    html+="</table>";
+	  	document.getElementById("bibliodiv").innerHTML=html;
+	  }
+	  
+	};
+}
+
+// inserimento dati
+function newData(isbn, author, title) {
+	var tx = db.transaction("books", "readwrite");
+	var store = tx.objectStore("books");
+
+	var request = store.put({title: title, author: author, isbn: isbn});
+	request.onerror = function() {
+		alert(request.error);
+  	document.getElementById("bibliodiv").innerHTML=(request.error);
+	};
+}
+
+</script>
+
+<form>
+<fieldset>
+<legend>Inserisci un nuovo volume nella biblioteca</legend>
+<input type="text" name="isbn" value="" placeholder="enterisbn"><br>
+<input type="text" name="author" value="" placeholder="author"><br>
+<input type="text" name="title" value="" placeholder="title"><br>
+<input type="button" onclick="newData(this.form.isbn.value,this.form.author.value,this.form.title.value);" value="inserisci">
+</fieldset>
+</form>
+
+
+<form>
+<fieldset>
+<legend>Consulta la biblioteca</legend>
+<input type="text" name="searchstring" value="Fred" placeholder="search string">
+<input type="button" onclick="readAll(this.form.searchstring.value);" value="read data">
+</fieldset>
+</form>
+<div id="bibliodiv"></div>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Drag and Drop</title>
+</head>
+<h1>Drag and Drop</h1>
+<style>
+/* Prevent the text contents of draggable elements from being selectable. */
+[draggable] {
+  user-select: none;
+}
+
+#sources img {cursor: move; width: 50px; height: 50px; border: 1px solid #dedede;}
+#targets img {cursor: move; width: 50px; height: 50px; border: 1px solid #dedede;}
+div.over  {  border: 2px dashed #000;}
+div.over  {  border: 2px dashed #000;}
+#sources {float: left}
+#targets {float: left; width: 80%}
+#targets span {font-size: 1.1em; font-family: Verdana; padding: 2px}
+div.wrong img {background: red}
+
+</style>
+
+<div id="sources">
+<div id=source1 draggable="true"><img src="img/HTML5_3D_Effects_32.png"></div><br>
+<div id=source2 draggable="true"><img src="img/HTML5_Connectivity_32.png"></div><br>
+<div id=source3 draggable="true"><img src="img/HTML5_Device_Access_32.png"></div><br>
+<div id=source4 draggable="true"><img src="img/HTML5_Offline_Storage_32.png"></div><br>
+<div id=source5 draggable="true"><img src="img/HTML5_Performance_32.png"></div><br>
+<div id=source6 draggable="true"><img src="img/HTML5_Semantics_32.png"></div><br>
+<div id=source7 draggable="true"><img src="img/HTML5_Styling_32.png"></div><br>
+</div>
+
+<div id="targets">
+<div id="target1"><img src="img/logocorso.png" alt="img/HTML5_Performance_32.png"><span>Performance and Integration</span></div><br>
+<div id="target2"><img src="img/logocorso.png" alt="img/HTML5_Device_Access_32.png"><span>Device Access</span></div><br>
+<div id="target3"><img src="img/logocorso.png" alt="img/HTML5_Styling_32.png"><span>Styling</span></div><br>
+<div id="target4"><img src="img/logocorso.png" alt="img/HTML5_Connectivity_32.png"><span>Connectivity</span></div><br>
+<div id="target5"><img src="img/logocorso.png" alt="img/HTML5_3D_Effects_32.png"><span>Graphics and 3D effects</span></div><br>
+<div id="target6"><img src="img/logocorso.png" alt="img/HTML5_Offline_Storage_32.png"><span>Offline  e  storage</span></div><br>
+<div id="target7"><img src="img/logocorso.png" alt="img/HTML5_Semantics_32.png"><span>Semantics</span></div><br>
+</div>
+
+<hr style="clear: both">
+<script>
+var dragSrcEl = null;
+
+function handleDragStart(e) {
+	mylog("dragstart " + this.id);
+  this.style.opacity = '0.4';
+  dragSrcEl = this;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text', this.getElementsByTagName("img")[0].src);
+}
+
+function handleDragOver(e) {
+	//mylog("dragOver");
+  if (e.preventDefault) {
+    e.preventDefault(); 
+  }
+  e.dataTransfer.dropEffect = 'move';  
+  return false;
+}
+
+function handleDragEnter(e) {
+	mylog("dragenter " + this.id);
+  // this / e.target is the current hover target.
+  this.classList.add('over');
+}
+
+function handleDragLeave(e) {
+	mylog("dragleave " + this.id)
+  this.classList.remove('over');  
+}
+
+
+function handleDrop(e) {
+	mylog("drop "  + this.id);
+  if (e.stopPropagation) {
+    e.stopPropagation(); 
+  }
+
+  if (dragSrcEl != this) {
+    // Set the source column's HTML to the HTML of the column we dropped on.
+    dragSrcEl.getElementsByTagName("img")[0].src = this.getElementsByTagName("img")[0].src;
+		dragSrcEl.style.opacity=1.0;
+    this.getElementsByTagName("img")[0].src = e.dataTransfer.getData('text');
+		if (this.getElementsByTagName("img")[0].src.split('/').pop() != this.getElementsByTagName("img")[0].alt.split('/').pop()) 
+			this.classList.add("wrong");
+  }
+
+  return false;
+}
+
+function handleDragEnd(e) {
+  mylog("dragend " + this.id);
+
+  [].forEach.call(sources, function (col) {
+    col.classList.remove('over');
+  });
+	[].forEach.call(targets, function (col) {
+    col.classList.remove('over');
+  });
+}
+
+var sources = document.querySelectorAll('#sources div');
+[].forEach.call(sources, function(s) {
+  s.addEventListener('dragstart', handleDragStart, false);
+  s.addEventListener('dragenter', handleDragEnter, false)
+  s.addEventListener('dragover', handleDragOver, false);
+  s.addEventListener('dragleave', handleDragLeave, false);
+  s.addEventListener('drop', handleDrop, false);
+  s.addEventListener('dragend', handleDragEnd, false);
+});
+
+var targets = document.querySelectorAll('#targets div');
+[].forEach.call(targets, function(s) {
+  s.addEventListener('dragstart', handleDragStart, false);
+  s.addEventListener('dragenter', handleDragEnter, false)
+  s.addEventListener('dragover', handleDragOver, false);
+  s.addEventListener('dragleave', handleDragLeave, false);
+  s.addEventListener('drop', handleDrop, false);
+  s.addEventListener('dragend', handleDragEnd, false);
+});
+
+</script>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>
