@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<h1>I numeri in javascript</h1>
+<script>
+function testdifference() {
+x = 0.3 - 0.2;
+y = 0.4 - 0.3;
+if (x == y) alert("uguali!\nx="+x+"\ny="+y) 
+else alert ("Non sono uguali!\nx="+x+"\ny="+y);
+}
+
+function testdifference2() {
+x = 0.5 - 0.25;
+y = 0.125 + 0.125;
+if (x == y) alert("uguali!\nx="+x+"\ny="+y) 
+else alert ("Non sono uguali!\nx="+x+"\ny="+y);
+}
+
+function numbers() {
+mylog(Number.MIN_VALUE);
+mylog(Number.MAX_VALUE);
+}
+</script>
+
+<button onclick="testdifference();">rappresentazione numeri decimali</button>
+<button onclick="testdifference2();">rappresentazione numeri decimali (2)</button>
+<button onclick="numbers();">sui numeri...</button>
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

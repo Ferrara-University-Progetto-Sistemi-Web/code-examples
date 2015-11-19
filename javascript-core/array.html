@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<h1>Array</h1>
+Definizione di array secondo diverse primitive.
+<script type="text/javascript">
+var array1 = new Array (45, 67, "Ugo", "Diego");
+var array2 = new Array (10);
+array2[0]=45;
+array2[10]='?';
+var array3 = [ 45, 67, "Ugo", "Diego"];
+var array4 = [ 12, array3];
+var array5 = [ 1, "ciao",nn]; 
+
+function report(a) {
+	var html = "";
+	html += "dimensione: " + a.length + "<br>";
+	html += "contenuto: <br>";
+	for (var i=0;i<a.length;i++)
+		html += "[" + i + "]= " + a[i] + "<br>";
+	html += "risultato di toString() = " + a.toString();
+	document.getElementById("console").innerHTML= html;
+}
+
+function nn() {alert(this.length);}
+</script>
+<pre><code class="language-js">var array1 = new Array (45, 67, "Ugo", "Diego");
+var array2 = new Array (10); // dichiaro la dimensione. Gli elementi non sono definiti
+array2[0]=45;
+array2[10]='?';
+var array3 = [ 45, 67, "Ugo", "Diego"]; // dichiarazione alternativa alla prima
+var array4 = [ 12, array3]; // Array come elemento
+var array5 = [ 1, "ciao", nn]; // funzione come elemento di un Array
+
+function nn() {alert(this.length);}</code></pre>
+
+
+<button onclick="report(array1);">array1</button>
+
+<button onclick="report(array2);">array2</button>
+
+<button onclick="report(array3);">array3</button>
+
+<button onclick="report(array4);">array4</button>
+
+<button onclick="report(array5);">array5</button>
+<button onclick="array5[2]();">array5 call</button>
+
+
+<div id="console"></div>
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

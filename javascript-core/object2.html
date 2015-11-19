@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Prova javascript buil-in object</title>
+<script type="text/javascript">
+var myMenuItem = {
+	href: 'http://myurl.it',
+	text: 'menu item 1',
+	printItem: function() {
+  	document.write('<a href="'+this.href+'">'+ this.text + '</a><br>');
+	}
+}
+</script>
+</head>
+<body>
+<h1>Oggetti user-defined</h1>
+<h2>Ecco il menu</h2>
+
+<script type="text/javascript">
+for (i=0;i<5;i++)
+	myMenuItem.printItem(); 
+</script>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>
+
+
+
+
+

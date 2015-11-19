@@ -1,0 +1,42 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+<h1>Classi in javascript</h1>
+<script type="text/javascript">
+function Person(fn,ln,bp,bd) {
+	this.firstname = fn;
+	this.lastname = ln;
+	this.birthplace = bp;
+	this.birthdate = new Date();
+	this.birthdate.setTime(Date.parse(bd));
+	this.age2 = _age;	
+}
+Person.prototype.age = _age;
+function _age() {
+	var age;
+	var today = new Date();
+	var one_year = 365*24*60*60*1000;
+	// calcola l'età
+	age = Math.ceil((today.getTime()-this.birthdate.getTime())/(one_year));
+	return age;
+}
+Person.prototype.toString = function() {
+return this.firstname + ' ' + this.lastname + ' è nato(a) a ' + this.birthplace + '. oggi ha ' + this.age() + ' anni';
+}
+
+var singer1 = new Person("Otep","Shamaya","Los Angeles","Nov 7 1979");
+var singer2 = new Person("Serj","Tankian","Beirut","Aug 21 1967");
+
+
+</script>
+<button onclick="mylog (singer1); mylog(singer2)">toString</button>
+<button onclick="mylog (singer1.age());">singer1.age</button>
+<button onclick="mylog (singer1.age2());">singer1.age2</button>
+<button onclick="mylog (Person.age2());">Person.age2 (non definita)</button>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

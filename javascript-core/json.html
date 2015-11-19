@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<script>
+var b = {books:[
+{title:"AJAX and PHP: Building Modern Web Applications, 2nd Ed",
+isbn:"978-1904817726"},
+{title:"Beginning PHP and MySQL E-Commerce, 2nd Edition",
+isbn:"978-1590598641"},
+{title:"Professional Search Engine Optimization with PHP",
+isbn:"978-0470100929"}
+]};
+</script>
+
+<body>
+<script>
+document.write("<table>");
+for (var i=0; i< b.books.length; i++) {
+	document.write("<tr>");
+	document.write("<td>"+b.books[i].title+"</td>");
+	document.write("<td>"+b.books[i].isbn+"</td>");
+	document.write("</tr>");
+}
+document.write("</table>");
+</script>
+</body>
+</html>

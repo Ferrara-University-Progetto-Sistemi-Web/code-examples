@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<h1>Test funzioni di cattura errore</h1>
+<p>Il messaggio di errore viene visualizzato se la funzione myfunction() non è definita.
+
+<script type="text/javascript">
+function proviamo(f) {
+	try{
+		mylog('1. Spero che la funzione <em>' + f + '</em> esista!');
+		var t = eval(f);
+		mylog('2a. Tutto OK!');
+	}
+	catch(e){
+		mylog('2b. Abbiamo un problema: ' + e.message);
+	}
+	finally{
+		mylog('3. Questo messaggio viene visto con o senza errori. Siamo alla fine.');
+	}
+}
+
+function myfunction() {}
+</script>
+<button onclick="proviamo('myfunction()')">prova 1</button>
+<button onclick="proviamo('nonesiste()')">prova 2</button>
+<script src="../supporto/progettoweb.js"></script>
+</html>

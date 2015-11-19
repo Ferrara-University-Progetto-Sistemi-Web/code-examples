@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<h1>Funzioni</h1>
+<p>Definizione e utilizzo di funzioni.
+<script>
+var var1=10;
+
+function f1(a, b, c) {
+	return (a+b)*c;
+}
+
+function f() {mylog (f1(2,3,4));}
+
+var kappa = f;
+
+function g() {
+var1=200;
+}
+
+
+
+
+
+</script>
+<pre><code class="language-js">var var1=10;
+
+function f1(a, b, c) {
+	return (a+b)*c;
+}
+
+function f() {mylog (f1(2,3,4));}
+
+var kappa = f;
+
+function g() {
+var1=200;
+}
+
+function mylog(msg) {
+  document.getElementById("console").innerHTML += msg + "<br>";
+}</code></pre>
+
+<div id="console"></div>
+
+<button onclick="kappa();">chiama kappa()</button>
+<button onclick="mylog('var1='+var1);">mostra var1</button>
+<button onclick="g();">chiama g()</button>
+<button onclick="mylog('var1='+var1);">mostra di nuovo var1</button>
+<script src="../supporto/progettoweb.js"></script>
+</html>

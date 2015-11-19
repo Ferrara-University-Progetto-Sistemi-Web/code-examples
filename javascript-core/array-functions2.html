@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+
+<h1>Array funzioni EMCAScript 5.</h1>
+<script type="text/javascript">
+var array1 = new Array (3, 8, 7, 5, 11);
+
+function mymap() {
+mylog('array1.map(function(a){return (a-1)}))='+array1.map(function(a){return (a-1)}));
+}
+
+function myforEach() {
+mylog('array1.forEach(function(v,i,a){a[i]+=10;}))');array1.forEach(function(v,i,a){a[i]+=10;});
+}
+
+function ff() {
+mylog('array1='+array1);
+mylog(array1.every(iseven) );
+mylog(array1.filter(iseven).every(iseven) );
+mylog('array1='+array1);
+}
+
+function myreduce() {
+var a =array1;
+mylog('sum=' + a.reduce(function(x,y) { return x+y }, 0)); // Sum of values
+mylog('product=' + a.reduce(function(x,y) { return x*y }, 1)); // Product of values
+mylog('max =' + a.reduce(function(x,y) { return (x>y)?x:y; })); // Largest value
+}
+
+function iseven(x) { return x % 2 === 0; }
+</script>
+<button onclick="mylog('array1='+array1);">array1</button>
+
+<button onclick="mymap();">map</button>
+<button onclick="myforEach();">forEach</button>
+
+<button onclick="ff();">ff</button>
+<button onclick="myreduce();">reduce</button>
+
+
+<div id="console"></div>
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

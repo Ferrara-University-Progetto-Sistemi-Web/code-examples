@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<meta charset="utf-8">
+<h1>Object</h1>
+Creazione di Object.
+
+<script>
+var empty = {};						// oggetto vuoto (equivale a new Object)
+var point = { x: 10, y: 15};		// oggetto con due proprietà assegnate
+var book = {						// oggetto complesso (notare che alcune proprietà sono tra apici)
+	"main title": "What If",
+	"sub title": "serious scientific answers to absurd hypothetical questions",
+	"for": "everyone",
+	author: {						// proprietà complessa: è a sua volta un oggetto
+		"first-name": "Randall",
+		"last-name": "Munroe"
+	}
+}
+
+var empty2 = new Object;
+var point2= new Object;
+point2.x = 10;
+point2.y = 15;
+var book2 = new Object;
+book2['main title']="What If";
+book2['sub title']="serious scientific answers to absurd hypothetical questions";
+book2.for = "everyone";
+book2.author = new Object;
+book2.author['first-name']="Randall";
+book2.author['last-name']="Munroe";
+</script>
+<pre><code class="language-js">var empty = {};						// oggetto vuoto (equivale a new Object)
+var point = { x: 10, y: 15};		// oggetto con due proprietà assegnate
+var book = {						// oggetto complesso (notare che alcune proprietà sono tra apici)
+	"main title": "What If",
+	"sub title": "serious scientific answers to absurd hypothetical questions",
+	"for": "everyone",
+	author: {						// proprietà complessa: è a sua volta un oggetto
+		"first-name": "Randall",
+		"last-name": "Munroe"
+	}
+}
+
+var empty2 = new Object;
+var point2= new Object;
+point2.x = 10;
+point2.y = 15;
+var book2 = new Object;
+book2['main title']="What If";
+book2['sub title']="serious scientific answers to absurd hypothetical questions";
+book2.for = "everyone";
+book2.author = new Object;
+book2.author['first-name']="Randall";
+book2.author['last-name']="Munroe";</code></pre>
+
+
+<button onclick="mylog(JSON.stringify(book));">mostrami book</button>
+<button onclick="mylog(JSON.stringify(book2));">mostrami book2</button>
+
+
+
+
+<div id="console"></div>
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

@@ -1,0 +1,26 @@
+﻿<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Oggetti come array associativi</title>
+</head>
+<body>
+<h1>Oggetti come array associativi</h1>
+<script>
+var myArray = new Object;
+myArray["ugo"] = "amico";
+myArray["enrico"] = "conoscente";
+myArray.enzo = "collega";
+
+for (var amico in myArray)
+	document.write(amico + ' è un ' + myArray[amico] + '<br>');
+</script>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>
+
+
+
+
+
