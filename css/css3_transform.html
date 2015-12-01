@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<style>
+div.container {
+	padding: 100px;
+	background: #dedede;
+	overflow: auto;
+}
+div.boxed {
+	border: 1px solid #000;
+	width: 200px;
+	position: absolute;
+	background: #fff;
+}
+div.skewed {
+	position: absolute;
+	left: 300px;
+	transform: skew(20deg, 10deg);
+  -webkit-transform: skew(20deg, 10deg);
+  -o-transform: skew(20deg, 10deg);
+  -moz-transform: skew(20deg, 10deg);
+}
+div.scaled {
+	position: absolute;
+	left: 600px;
+	-ms-transform: scale(1,0.6); /* IE 9 */
+	-webkit-transform: scale(1,0.6); /* Safari */
+	transform: scale(1,0.6);
+	-moz-transform: scale(1,0.6);
+}
+@keyframes roll {
+	0% {transform: rotateY(0deg)}
+	100% {transform: rotateY(360deg)}
+}
+div.scaled {
+	transform-style: preserve-3d;
+	animation: roll 2s infinite linear;
+}
+</style>
+
+<body>
+<div class="container">
+<div class="boxed">
+<h1>Lorem ipsum</h1>
+<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia viverra est, lacinia tincidunt nisi dapibus quis. Donec quis sapien sodales lorem rhoncus mattis. Vestibulum augue tortor, gravida ut ipsum nec, pretium gravida massa. In hac habitasse platea dictumst. Curabitur iaculis nulla quis nisi malesuada consequat. 
+</div>
+<div class="boxed skewed">
+<h1>Lorem ipsum</h1>
+<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia viverra est, lacinia tincidunt nisi dapibus quis. Donec quis sapien sodales lorem rhoncus mattis. Vestibulum augue tortor, gravida ut ipsum nec, pretium gravida massa. In hac habitasse platea dictumst. Curabitur iaculis nulla quis nisi malesuada consequat. 
+</div>
+<div class="boxed scaled">
+<h1>Lorem ipsum</h1>
+<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lacinia viverra est, lacinia tincidunt nisi dapibus quis. Donec quis sapien sodales lorem rhoncus mattis. Vestibulum augue tortor, gravida ut ipsum nec, pretium gravida massa. In hac habitasse platea dictumst. Curabitur iaculis nulla quis nisi malesuada consequat. 
+</div>
+
+</div>
+</body>
+</html>
