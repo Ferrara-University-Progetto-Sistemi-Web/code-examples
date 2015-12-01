@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Moving and stretching objects</title>
+<style type="text/css">
+.dots {position: absolute; border: 1px solid red; background: #dedede; width: 5px; height: 5px}
+</style>
+</head>
+<body>
+<h1>Posizionamento di elementi</h1>
+<a href='' onclick='animate();return false;'>move</a>
+<div class="dots" style="left:0px;top:200px;width:500px;height:200px;border: 1px solid #000000" onclick='animate();'></div>
+<div class="dots" style="left:0px;top:260px;width:500px;height:0px;border: 1px dotted #000000"></div>
+<script type="text/javascript">
+var amp=0;
+var delta=50;
+
+for(i=0;i<100;i++) {
+	document.write("<div id='pixel" + i + "' class='dots' style='top:260px;left:"+(5*i)+"px'></div>");
+} 
+function animate() {
+	if (Math.abs(amp)==250) delta=-delta;
+	amp+=delta;
+	resize(amp);
+	
+}
+
+function resize(amplitude) {
+	for(i=0;i<100;i++) {
+		elem = document.getElementById('pixel'+i).style;
+		elem.top = (260+amplitude*Math.sin(i/50.0*3.14))+'px';
+		elem.left = (5*i)+'px';
+		elem.height = Math.abs(amplitude/4*Math.sin(i/50.0*3.14))+'px';
+	}
+}
+</script>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

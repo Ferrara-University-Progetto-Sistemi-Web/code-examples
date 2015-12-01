@@ -1,0 +1,41 @@
+<html>
+	<body>
+		<script type="text/javascript">
+		function apricalendario(campo) {
+			var wfeatures="width=200,height=200,resizable=yes,status=no";
+			window.open("calendario.html?date="+campo.value+"&campo="+campo.name,"calendar",wfeatures);
+		}		
+		function impostaData(campo,valore) {
+			document.forms.theForm[campo].value = valore;
+		}
+
+		function apricalendario2(campo) {
+			var wfeatures="dialogWidth:200px;dialogHeight:200px;resizable:yes;status:no";
+			campo.value = showModalDialog("calendario.html?date="+campo.value,"",wfeatures);
+		}		
+
+		function apricalendario3(campo) {
+			document.getElementById("calFrame").src="calendario.html?date="+campo.value+"&campo="+campo.name;
+			document.getElementById("calFrame").css.display="block";
+		}
+
+		function apricalendario4(campo) {
+			document.getElementById("calFrame").src="calendario.html?date="+campo.value+"&campo="+campo.name;
+			document.getElementById("calDiv").innerHTML=document.getElementById("calFrame").innerHTML;
+			document.getElementById("calDiv").css.display="block";
+		}
+		
+		</script>
+		<form id="theForm" >
+			<label for="data">Inserire la data:</label>
+			<input type="text" id="data" name="data"  /><br />
+			<input type="button" value="popup non modale" onclick="apricalendario(this.form.data)" /><br />
+			<input type="button" value="popup modale"  onclick="apricalendario2(this.form.data)"/> (solo IE5+ e FF3+) <br />
+			<input type="button" value="iframe"  onclick="apricalendario3(this.form.data)"/>
+			<iframe id="calFrame" src="" width="200" height="200" frameborder="0" style="display: block"></iframe> (callback non realizzata)<br />
+			<input type="button" value="div"  onclick="apricalendario4(this.form.data)"/> (non realizzata)<br />
+		
+		</form>
+		
+	</body>
+</html>

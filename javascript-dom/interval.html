@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+<style>
+#orologio {font-size: 4em; border: 1px solid black; padding: 10px; display: inline-block}
+</style>
+</head>
+<body>
+<h1>Temporizzazioni</h1>
+<div id="orologio">HH:MM:SS</div>
+<button onclick="start();">START</button>
+<button onclick="stop();">STOP</button>
+<script>
+//For todays date;
+Date.prototype.today = function(){ 
+    return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear() 
+};
+//For the time now
+Date.prototype.timeNow = function(){
+     return ((this.getHours() < 10)?"0":"") + this.getHours() + ":" + 
+     	((this.getMinutes() < 10)?"0":"") + this.getMinutes() + ":" + 
+     	((this.getSeconds() < 10)?"0":"") + this.getSeconds() + "." + 
+     	parseInt((this.getMilliseconds())/100.0);
+};
+function showtime() {
+	var d = new Date;
+	document.getElementById('orologio').innerHTML=d.timeNow();
+}
+var timer;
+function start() {
+	timer = setInterval(showtime,100);
+}
+function stop() {
+	clearInterval(timer);
+}
+</script>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

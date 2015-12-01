@@ -1,0 +1,199 @@
+<HTML>
+<head>
+<title>Calendario</title>
+<style type="text/css">
+BODY{margin:0; padding:0}
+TD{font-weight:bolder;font-family: Verdana,Arial,  Helvetica;font-size:11px;
+background:#dedede; padding: 0 0 0 0;
+    border-bottom: solid 1pt #5d616e; border-right: solid 1pt #5d616e;
+    border-top: solid 1pt #eef0f3; border-left: solid 1pt #eef0f3;}
+TD.heading{background:#c7d0d9}
+TD.selected{background:#ffffff;
+    border-top: solid 1pt #5d616e; border-left: solid 1pt #5d616e;
+    border-bottom: solid 1pt #eef0f3; border-right: solid 1pt #eef0f3;}
+TD.selectable{cursor:default;}
+TD.selectable:hover{background-color: white}
+INPUT{font-weight:bold; font-family: Verdana, Arial, Helvetica;font-size:11px}
+input.bottom{background-color: #ffb70b; width: 75px; font-weight: bolder;
+              font-family:Verdana, Arial, Helvetica; color: #000000; font-size:8pt;
+              border-style: solid; border-width: 1px; border-color: #6b61bd;
+              background-image: url(/img/bottone.gif); background-repeat: no-repeat;
+              background-position: left center; cursor: default;}
+input.year{border: 0pt;background:#c7d0d9;font-size:11px}
+</style>
+</head>
+<script language=javascript>
+function getArgs() {
+  var args= new Object();
+  var query = location.search.substring(1);
+  var pairs = query.split("&");
+  for(var i=0; i < pairs.length; i++) {
+    var pos = pairs[i].indexOf('=');
+  if (pos == -1) continue;
+  var argname=pairs[i].substring(0,pos);
+  var value = pairs[i].substring(pos+1);
+  args[argname] = unescape(value);
+  }
+  return args;
+}
+
+
+var m= new Array();
+m[0]=new Array();
+m[0][0] = "L";
+m[0][1] = "M";
+m[0][2] = "M";
+m[0][3] = "G";
+m[0][4] = "V";
+m[0][5] = "S";
+m[0][6] = "D";
+for (var i=1;i<7;i++) {
+    m[i] = new Array();
+    for (var j=0;j<=6;j++) {
+      m[i][j]="&nbsp;";
+    }
+  }
+var NomeMese = new Array();
+NomeMese[0]="GENNAIO";
+NomeMese[1]="FEBBRAIO";
+NomeMese[2]="MARZO";
+NomeMese[3]="APRILE";
+NomeMese[4]="MAGGIO";
+NomeMese[5]="GIUGNO";
+NomeMese[6]="LUGLIO";
+NomeMese[7]="AGOSTO";
+NomeMese[8]="SETTEMBRE";
+NomeMese[9]="OTTOBRE";
+NomeMese[10]="NOVEMBRE";
+NomeMese[11]="DICEMBRE";
+
+function mostraMese(giorno,mese,anno) {
+  if (mese<0) {
+    mese=11;
+    anno-=1;
+  }
+  if (mese==12) {
+    mese =0;
+    anno+=1;
+  }
+  var r=1;
+
+  for (var i=1;i<7;i++) {
+    m[i] = new Array();
+    for (var j=0;j<=6;j++) {
+      m[i][j]="&nbsp;";
+    }
+  }
+  for(var i=1;i<=ngiorni(mese,anno);i++) {
+    d=new Date(anno,mese,i);
+    w = (d.getDay()+6)%7;
+    if ((w==0)&&(i>1)) {
+      r += 1;
+    }
+    m[r][w]=i;
+
+    if (d.getMonth() != mese) break;
+  }
+
+  var s="<table bgcolor=#000000 width=200 cellpadding=0 cellspacing=0 border=0>";
+  s+='<tr bgcolor=#ffffff><td class=heading><a onclick="mostraMese(-1,' + (mese) + ',' + (anno-1) +');" ><img alt="<" border=0 src="/img/nav_prev.gif"></a></td>';
+  s+='<td width=100% class=heading colspan=5 align=center><input size="4" name="ANNO" value=' + anno + ' onchange="mostraMese(-1,' + (mese) + ',this.value);" class="year"></td>';
+  s+='<td class=heading align=right><a onclick="mostraMese(-1,' + (mese) + ',' + (1*anno+1) +');" ><img alt=">" border=0 src="/img/nav_next.gif"></a></td></tr>';
+  s+='<tr bgcolor=#ffffff><td class=heading><a onclick="mostraMese(-1,' + (mese-1) + ',' + anno +');"><img alt="<" border=0 src="/img/nav_prev.gif"></a></td>';
+  s+='<td width=100% class=heading colspan=5 align=center>' + NomeMese[mese] + '</td>';
+  s+='<td class=heading align=right><a onclick="mostraMese(-1,' + (mese+1) + ',' + anno +');"><img alt=">" border=0 src="/img/nav_next.gif"></a></td></tr>';
+  s+='</table>';
+  s+="<table bgcolor=#000000 width=200 cellpadding=0 cellspacing=0 border=0>";
+
+  s+="<tr  bgcolor=#ffffff>";
+  for (var j=0;j<=6;j++)
+     s += "<td class=heading width=30 align=center><font color='" + ((j<=5)?"#000000":"#ff0000") + "'>" + m[0][j] + "</font></td>";
+  s+="</tr>";
+  var retval="";
+  for (var i=1;i<m.length;i++) {
+    s+="<tr bgcolor=#ffffff>";
+    for (var j=0;j<=6;j++) {
+      if (m[i][j] != "&nbsp;")
+        retval = "onclick='javascript:mostraMese(" + (m[i][j]) + "," + mese + "," +anno +"); returnValue=\"" + m[i][j] + "/" + (mese+1) + "/" + anno +"\";'";
+        etic=m[i][j];
+        etic = "<font color='" + ((j<=5)?"#000000":"#ff0000") + "'>" + etic + "</font>";
+        s += "<td align=right " + ((m[i][j]==giorno)?"class=selected ":((m[i][j]!="&nbsp;")?"class=selectable ":""));
+        s += retval + ">" + etic + "</td>";
+    }
+    s+="</tr>";
+  }
+  s+="</table>";
+  document.all.mese.innerHTML = s;
+
+}
+
+function ngiorni(mese,anno) {
+  switch (mese) {
+    case 0:
+    case 2:
+    case 4:
+    case 6:
+    case 7:
+    case 9:
+    case 11:
+      return 31;
+    case 3:
+    case 5:
+    case 8:
+    case 10:
+      return 30;
+    case 1:
+      return (anno%4)?28:29;
+  }
+}
+</script>
+<body marginwidth="0" marginheight="0" topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0">
+<div id=nomemese>
+</div>
+<div id=mese>
+
+</div>
+<div id=bottoni>
+<table border=1 cellpadding=0 cellspacing=0 width=200>
+<tr>
+<td class=heading align=center>
+<input class=bottom onclick='myReturn(returnValue);' type=button value='OK'>
+<input class=bottom onclick='myReturn(savedDate);' type=button value='Annulla'>
+</td></tr>
+</table>
+</div>
+<script language=javascript>
+var savedDate;
+var d=new Date();
+var args = getArgs();
+
+if (args.date == "") {
+  returnValue=d.getDate() + "/" + (d.getMonth()+1) + "/" + d.getFullYear();
+  mostraMese(d.getDate(),d.getMonth(),d.getFullYear());
+} else {
+  returnValue = args.date;
+  i1=args.date.indexOf("/");
+  i2=args.date.lastIndexOf("/");
+  mostraMese(args.date.substr(0,i1),((args.date.substr(i1+1,i2-i1-1))-1),args.date.substr(i2+1));
+}
+savedDate=returnValue;
+
+/*
+ gestione della chiusura della finestra. Se invocata definendo l'argomento "campo"
+ viene invocata la funzione di call_back predefinita (impostaData) che deve essere definita nel
+ documento chiamante. Se l'argomento "campo" e' vuoto, allora si e' fatto uso della chiamata showModalDialog
+ e il valore letto viene tornato nella variabile returnValue.
+*/
+function myReturn(val) {
+	if (args.campo) {
+		opener.impostaData(args.campo,val);
+		self.close();
+	} else {
+		returnValue = val;
+		self.close();
+	}
+}
+</script>
+</body>
+</HTML>
+

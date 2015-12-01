@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+<title>Meta scripting</title>
+</head>
+<body>
+<h1>Meta scripting</h1>
+<select id='who'>
+<option value="1">Mario
+<option value="2">Enzo
+</select>
+<button onclick="chiama();">chiama</button>
+
+<iframe id="chiamante"></iframe>
+
+<script>
+function chiama() {
+var id;
+var el = document.getElementById('who');
+id = el.options[el.selectedIndex].value;
+
+document.getElementById("chiamante").contentDocument.write("<script src='chiamami"+id+".js'></scr"+"ipt>");
+}
+</script>
+
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

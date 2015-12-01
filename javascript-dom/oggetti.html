@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>BOM e DOM</title>
+<style>
+div.oggetto {width: 200px; border: 2px solid #000; margin: 20px; float: left; box-shadow: 10px 10px 5px #888888; background: #fff}
+div.oggetto .nome {padding: 3px;font-family: Arial; text-align: center; font-weight: bolder; border-bottom: 1px solid #000; text-decoration: underline}
+div.oggetto .funzioni {font-size: 0.8em; padding: 3px;font-family: Arial; font-type: italic}
+div.oggetto .proprieta {font-size: 0.8em;padding: 3px;font-family: Arial; font-type: italic; border-bottom: 1px dotted #000; }
+div.oggetto .eventi {font-size: 0.8em; padding: 3px;font-family: Arial; font-type: italic}
+a.linkobject {text-decoration: none; border-bottom: 1px dotted blue}
+div.oggetto .proprieta div {overflow: hidden; background: #fff}
+div.oggetto .proprieta div:hover {overflow: visible; background: #fff}
+.detailstitle {color: blue; background: #f0f0f0;}
+.detailslist {}
+</style>
+
+<script>
+
+var objId = 0;
+
+function printObject(name,object) {
+var output = '';
+var funx = '';
+var props = '';
+var objs = "";
+var events = "";
+for (property in object) {
+	if (property.substr(0,2)=='on')  events += '<div>' + property + '()</div>';
+	else if (typeof object[property] == "object") objs += '<div>' + linkObject(name,property,"children"+objId) + ':&nbsp;' + beautify(object[property]) +'</div>';
+  else if (typeof object[property] == "function") funx += '<div>' + property + '()</div>';
+  else if (typeof object[property] == "string") props += "<div>" + property + ': ' + typeof object[property] + '= "<em>' + safePrint(object[property]) + '</em>"</div>';
+  else props += '<div>' + property + ': ' + typeof object[property] + '= ' + object[property] + '</div>';
+}
+output = "<div class=oggetto>";
+output += "<div class=nome>" + printName(name,object) + ": " + beautify(object) + "</div>";
+output += "<div class=details>";
+if (object.nodeType==1) {
+	output += "<div class=proprieta>";
+	if (object.id!="") output += "<div>" + "id: " + object.id + "</div>";
+	output += "<div>" +  linkObject(name,"childNodes","children"+objId) + ": " + object.childNodes.length +"</div>";
+	output += "</div>"
+}
+if (props!="") output += "<div class=proprieta><div class=detailstitle onclick=toggleView('pp"+objId+"')>properties</div><div style='display:none' class=detailslist id='pp"+objId+"'>" + props + "</div></div>";
+if (objs != "") output += "<div class=proprieta><div class=detailstitle onclick=toggleView('oo"+objId+"')>objects</div><div style='display:none' class=detailslist id='oo"+objId+"'>" + objs + "</div></div>";
+if (funx != "") output += "<div class=funzioni><div class=detailstitle onclick=toggleView('ff"+objId+"')>functions</div><div style='display:none' class=detailslist id='ff"+objId+"'>" + funx + "</div></div>";
+if (events != "") output += "<div class=eventi><div class=detailstitle onclick=toggleView('ee"+objId+"')>events</div><div style='display:none' class=detailslist id='ee"+objId+"'>" + events + "</div></div>";
+output += "</div>"
+output += "<div id='children" + objId + "'></div>"
+output += "</div>"
+objId++;
+return output;
+}
+
+function printName(name, object) {
+	switch (object.nodeType) { 
+		case 1: return "&lt;" + object.tagName + "&gt;";
+		case 3: return "#text";
+		case 8: return "&lt;-- --&gt;";
+		case 10: return "&lt;!doctype&gt;"
+		default: return name;
+	}
+}
+
+function showObject(name, object, container) {
+var div = (container==null)?"newobject":container;
+if (object.length === undefined)
+		document.getElementById(div).innerHTML+=(printObject(name,object));
+else {
+	document.getElementById(div).innerHTML="";
+	for(var i=0;i<object.length;i++)
+		document.getElementById(div).innerHTML+=(printObject(name+"["+i+"]",object[i]));
+}
+}
+
+function beautify(s) {
+	var a = String(s);
+	if (s) return a.replace("[object","").replace("]","");
+	else return s;
+}
+
+function linkObject(n,p,d) {
+	var div = (d==null)?"newobject":d;
+	var js = "javascript:showObject(\"" + n +"." + p + "\"," + n +"." +p + ",\"" + d +"\"); ";
+	return "<a class=linkobject onclick='"+js+"'><strong>" + p + "</strong></a>";
+}
+
+function safePrint(prop) {
+	var s = prop.replace(/</g,"&lt;");
+	if (s.length > 50) s = s.substr(0,50)+"...";
+	return s;
+}
+
+function toggleView(id) {
+if (document.getElementById(id).style.display!='none')
+	document.getElementById(id).style.display='none';
+else
+	document.getElementById(id).style.display='block';
+}
+
+
+
+</script>
+</head>
+<body id="n1">
+<h1>DOM Test Heading</h1>
+<hr />
+<!-- Just a comment -->
+<p>A paragraph of <em>text</em> is just an example</p>
+<ul>
+   <li><a href="http://www.yahoo.com">Yahoo!</a></li>
+   <li><a href="http://www.google.com">Google</a></li>
+</ul>
+<div id="newobject">
+<script>
+document.write(printObject("window",window));
+</script>
+</div>
+</body>
+</html>

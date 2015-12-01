@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Delete and Replace Demo</title>
+<meta charset="utf-8" />
+<style type="text/css">
+#toDelete {color: red; text-decoration: line-through;}
+#toReplace {color: green}
+</style>
+
+</head>
+
+<body>
+<h1>Interazione col DOM: eliminazione di nodi</h1>
+
+<div id="toDelete"><p>This is a paragraph</p><p>This is <em>another paragraph</em> to delete</p><p>This is yet another paragraph</p></div>
+
+<p>
+
+This paragraph has an <em id="toReplace">em element</em> in it.
+
+</p>
+
+<hr />
+
+<form action="#" method="get">
+
+      <input type="button" value="Delete" onclick="doDelete();" />
+
+      <input type="button" value="Replace" onclick="doReplace();" />
+
+			<!-- innerHTML non e' una proprieta' standard W3C -->
+      <input type="button" value="View" onclick="document.getElementById('source').value=(document.documentElement.innerHTML);" />
+
+			<br />
+			<textarea rows="10" cols="80" name="source" id="source"></textarea>
+</form>
+
+<script>
+
+function doDelete()
+{
+  var deletePoint = document.getElementById('toDelete');
+  if (deletePoint.hasChildNodes()) {
+	mylog("elimino nodo di tipo " + deletePoint.lastChild.nodeType+ deletePoint.lastChild);
+	deletePoint.removeChild(deletePoint.lastChild);
+   } else mylog("cancellato tutto");
+}
+
+function doReplace()
+{
+ var replace = document.getElementById('toReplace');
+ if (replace)
+  {
+    var newNode = document.createElement("strong");
+    var newText = document.createTextNode("strong element");
+    newNode.appendChild(newText);
+    replace.parentNode.replaceChild(newNode, replace);
+  }
+}
+
+
+</script>
+<scriptcc src="../supporto/progettoweb.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>DOM Test</title>
+</head>
+<body>
+
+<h1>DOM Test Heading</h1>
+<hr />
+<!-- Just a comment -->
+<p>A paragraph of <em>text</em> is just an example</p>
+<ul>
+   <li><a href="http://www.yahoo.com">Yahoo!</a></li>
+   <li><a href="http://www.google.com">Google</a></li>
+   <li><a href="http://www.amazon.com">Amazon</a></li>
+</ul>
+
+<form id="theForm" action="">
+<input id="tagname" type="text" name="tagname" /><label for="tagname">Inserire un tag (senza &lt; e &gt;). Viene visualizzato
+il contenuto dei vari nodi (se esistono)</label>
+<input type="button" onclick="alert(report1(this.form.tagname.value));" value="getElementsByTagName" />
+</form>
+
+<script type="text/javascript">
+function report1(tagname) {
+
+	var tagList = document.getElementsByTagName(tagname);
+	var s= "";
+	for (var i = 0; i < tagList.length; i++)
+		 s+= (tagList.item(i).nodeName) + "=" + (tagList.item(i).innerHTML) + "\n";
+	return s;
+}
+</script>
+<pre><code class='language-html'>
+&lt;h1&gt;DOM Test Heading&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;!-- Just a comment --&gt;
+&lt;p&gt;A paragraph of &lt;em&gt;text&lt;/em&gt; is just an example&lt;/p&gt;
+&lt;ul&gt;
+   &lt;li&gt;&lt;a href="http://www.yahoo.com"&gt;Yahoo!&lt;/a&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;a href="http://www.google.com"&gt;Google&lt;/a&gt;&lt;/li&gt;
+   &lt;li&gt;&lt;a href="http://www.amazon.com"&gt;Amazon&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<pre><code  class='language-js'>
+function report1(tagname) {
+
+	var tagList = document.getElementsByTagName(tagname);
+	var s= "";
+	for (var i = 0; i < tagList.length; i++)
+		 s+= (tagList.item(i).nodeName) + "=" + (tagList.item(i).innerHTML) + "\n";
+	return s;
+}
+</code></pre>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title></title>
+		<script type="text/javascript">
+		function Comune(c, n, cp, np) {
+			this.codice = c;
+			this.nome = n;
+			this.codiceProvincia = cp;
+			this.nomeProvincia = np;
+		}	
+		
+
+		var c = new Array();
+		c[c.length] = new Comune("0001","Bologna","BO","Bologna");
+		c[c.length] = new Comune("0002","Casalecchio di Reno","BO","Bologna");
+		c[c.length] = new Comune("0003","San Lazzaro di Savena","BO","Bologna");
+		c[c.length] = new Comune("0004","Ferrara","FE","Ferrara");
+		c[c.length] = new Comune("0005","Cento","FE","Ferrara");
+		c[c.length] = new Comune("0008","Argenta","FE","Ferrara");
+		c[c.length] = new Comune("0006","Modena","MO","Modena");
+		c[c.length] = new Comune("0009","Carpi","MO","Modena");
+		c[c.length] = new Comune("0007","Vignola","MO","Modena");
+
+		/* esempio JSON */		
+		var c2 = [
+			{
+				codice:"0001",
+				nome:"Bologna",
+				codiceProvincia:"BO",
+				nomeProvincia:"Bologna"
+			},
+			{
+				codice:"0002",
+				nome:"Casalecchio di Reno",
+				codiceProvincia:"BO",
+				nomeProvincia:"Bologna"
+			}			
+		];
+		
+		alert(c2.length);
+
+		function loadComuni(f) {
+			var cp = f.provincia.options[f.provincia.selectedIndex].value;
+			
+			f.comune.options.length=1;
+			for (i=0;i<c.length;i++) {
+				if (c[i].codiceProvincia == cp) {
+					var opt = new Option();
+					opt.value = c[i].codice;
+					opt.text = c[i].nome;
+					f.comune.options[f.comune.options.length]= opt;
+				}
+			}
+		}
+
+		function setup() {
+			alert("pronti?");
+			loadSelect(document.forms[0].provincia,"");
+		}
+		
+		
+
+
+		function loadSelect(combo,dati) {
+			var opt;
+			
+			combo.options.length = 0;
+			
+			opt = new Option();
+			opt.value = "BO";
+			opt.text = "Bologna";	
+			
+			combo.options[0]=opt;
+			
+		}
+
+		</script>
+		
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+
+		<form action="" method="get">
+			<label for="provincia">Provincia:</label>
+			<select name="provincia" onchange="loadComuni(this.form);">
+				<option value=""></option>
+				<option value="BO">BOLOGNA</option>
+				<option value="FE">FERRARA</option>
+				<option value="MO">MODENA</option>
+			</select>
+			
+			<label for="comune">Comune:</label>
+			<select name="comune">
+				<option value=""></option>
+				<option value="0001">Bologna</option>
+				<option value="0002">Casalecchio di Reno</option>
+				<option value="0003">San Lazzaro di Savena</option>
+				<option value="0004">Ferrara</option>
+				<option value="0005">Cento</option>
+				<option value="0008">Argenta</option>
+				<option value="0006">Modena</option>
+				<option value="0009">Carpi</option>
+				<option value="0007">Vignola</option>
+			</select>			
+		</form>
+	</body>
+</html>

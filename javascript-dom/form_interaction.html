@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<script>
+function leggiRadio(campo) {
+  var i;
+  
+  for (i=0;i<campo.length;i++)
+  	if (campo[i].checked) return campo[i].value;
+  
+  return "";
+}
+
+function leggiCheck(campo) {
+	if (campo.checked) return campo.value;
+	else return "";
+}
+
+
+function leggiTendina(campo) {
+  return campo.options[campo.selectedIndex].value;
+}
+
+function leggiCampo(campo) {
+	var tipo;
+	if (!campo.type) tipo = campo[0].type;
+	else tipo = campo.type;
+	
+	switch(tipo) {
+		case "radio": return leggiRadio(campo);
+		case "select": return leggiTendina(campo);
+		case "checkbox": return leggiCheck(campo);
+		default: return campo.value;
+	}
+}
+
+function scriviRadio(campo,valore) {
+	for (i=0;i<campo.length;i++)
+  	if (campo[i].value == valore)
+  		campo[i].checked=true;
+  	else
+  		campo[i].checked=false;
+  	
+}
+
+function scriviTendina(campo,valore) {
+	for (i=0;i<campo.options.length;i++) 
+		if (campo.options[i].value == valore) {
+			campo.options.selectedIndex=i;
+			return true;
+		}
+	return false;
+}
+
+
+function scriviCampo(campo,valore) {
+	var tipo;
+	if (!campo.type) tipo = campo[0].type;
+	else tipo = campo.type;
+	
+	switch(tipo) {
+		case "radio": return scriviRadio(campo,valore);
+		case "select": return scriviTendina(campo,valore);
+		case "checkbox": return scriviCheck(campo,valore);
+		default: return campo.value=valore;
+	}
+}
+</script>
+
+<body>
+<h1>Interazione con SELECT e RADIO</h1>
+<p>Esempio di interazione (lettura/scrittura) con campi di tipo SELECT e RADIO.
+<form>
+
+<fieldset>
+<legend>Elenco con select</legend>
+<label for="theSelect">seleziona un'opzione</label>
+<select id="theSelect" name="theSelect">
+<option value="1">Opzione 1</option>
+<option value="2">Opzione 2</option>
+<option value="3">Opzione 3</option>
+</select><br>
+<input type="button" value="leggi" onclick="alert(leggiCampo(this.form.theSelect));">
+<input type="button" value="trascrivi nei radio" onclick="scriviCampo(this.form.theRadio,(leggiCampo(this.form.theSelect)));">
+</fieldset>
+
+<fieldset>
+<legend>Elenco con radio button</legend>
+<input id="theRadio1" type="radio" value="1" name="theRadio"><label for="theRadio1">Opzione 1</label><br>
+<input id="theRadio2" type="radio" value="2" name="theRadio"><label for="theRadio2">Opzione 2</label><br>
+<input id="theRadio3" type="radio" value="3" name="theRadio"><label for="theRadio3">Opzione 3</label><br>
+<input type="button" value="leggi" onclick="alert(leggiCampo(this.form.theRadio));">
+<input type="button" value="trascrivi nella select" onclick="scriviCampo(this.form.theSelect,(leggiCampo(this.form.theRadio)));">
+</fieldset>
+
+
+
+</form>
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

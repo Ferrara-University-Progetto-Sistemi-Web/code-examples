@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>CSS Inline Rule Scripting</title>
+<meta charset="utf-8" >
+<style>
+#container {border: 1px solid #999; background: #f0f0f0; padding: 10px}
+</style>
+</head>
+
+<body>
+
+<h1>Alterazione dei parametri di stile</h1>
+<p>Questo modulo consente di alterare molti dei parametri di stile del DIV che contiene il testo.
+Il DIV è avvolto da un altro DIV contenitore, a sfondo grigio.
+<div id="container">
+<div id="test">
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to 
+make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
+remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing 
+Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</div>
+</div>
+
+<hr />
+
+
+
+<script>
+
+var theElement = document.getElementById("test");
+
+theElement.mySetProperty = function (prop, val) {
+	mylog('this.style["'+prop+'"]="'+val+'";');
+	this.style[prop]=val;
+}
+</script>
+
+
+
+<form id="cssForm" name="cssForm" action="#" method="get">
+
+<strong>Alignment:</strong>
+<select  onchange="theElement.mySetProperty('textAlign',this.options[this.selectedIndex].text);">
+      <option>left</option>
+      <option>center</option>
+      <option>right</option>
+      <option>justify</option>
+</select>
+
+<strong>Font:</strong>
+<select  onchange="theElement.mySetProperty('fontFamily',this.options[this.selectedIndex].text);">
+      <option>sans-serif</option>
+      <option selected="selected">serif</option>
+      <option>cursive</option>
+      <option>fantasy</option>
+      <option>monospace</option>
+</select>
+&nbsp;&nbsp;
+<input type="text" id="font" name="font" size="10" value="Impact" />
+<input type="button" value="set" onclick="theElement.mySetProperty('fontFamily',document.cssForm.font.value;)" />
+
+
+
+<br /><br />
+
+<strong>Style:</strong>
+<select onchange="theElement.mySetProperty('fontStyle',this.options[this.selectedIndex].text;)">
+      <option>normal</option>
+      <option>italic</option>
+      <option>oblique</option>
+</select>
+
+
+<strong>Weight:</strong>
+<select onchange="theElement.mySetProperty('fontWeight',this.options[this.selectedIndex].text;)">
+      <option>normal</option>
+      <option>bolder</option>
+      <option>lighter</option>
+</select>
+
+<strong>Variant:</strong>
+<select  onchange="theElement.mySetProperty('fontVariant',this.options[this.selectedIndex].text;)">
+      <option>normal</option>
+      <option>small-caps</option>
+</select>
+
+<br /><br />
+
+
+
+<strong>Text Decoration</strong>
+
+<select onchange="theElement.mySetProperty('textDecoration',this.options[this.selectedIndex].text;)">
+      <option>none</option>
+      <option>overline</option>
+      <option>underline</option>
+      <option>line-through</option>
+      <option>blink</option>
+</select>
+
+
+<strong>Font Size:</strong>
+<select  onchange="theElement.mySetProperty('fontSize',this.options[this.selectedIndex].text;)">
+      <option>xx-small</option>
+      <option>x-small</option>
+      <option selected="selected">small</option>
+      <option>medium</option>
+      <option>large</option>
+      <option>x-large</option>
+      <option>xx-large</option>
+</select>
+
+&nbsp;&nbsp;
+
+<input type="text" id="size" name="size" size="2" maxlength="2" value="36" />pt &nbsp;&nbsp
+<input type="button" value="set" onclick="theElement.mySetProperty('fontSize', document.cssForm.size.value + 'pt');" />
+
+<br /><br />
+
+<strong>Color:</strong>
+<input type="color" id="fgColor" name="fgColor" size="8" value="#00ffff" />
+<input type="button" value="set" onclick="theElement.mySetProperty('color', document.cssForm.fgColor.value);" />
+
+
+<strong>Background Color:</strong>
+<input type="color" id="bgColor" name="bgColor" size="8" value="#ff0000" />
+<input type="button" value="set" onclick="theElement.mySetProperty('backgroundColor', document.cssForm.bgColor.value);" />
+
+
+<br /><br />
+
+<strong>Borders:</strong>
+<select  onchange="theElement.mySetProperty('borderStyle',this.options[this.selectedIndex].text);">
+      <option>none</option>
+      <option>dotted</option>
+      <option>dashed</option>
+      <option>solid</option>
+      <option>double</option>
+      <option>groove</option>
+      <option>ridge</option>
+      <option>inset</option>
+      <option>outset</option>
+</select>
+
+<b>Padding:</b>
+<input type="text" id="padding" name="padding" size="8" value="20" />px
+<input type="button" value="set" onclick="theElement.style.padding = document.cssForm.padding.value+'px';" />
+
+<b>Margin:</b>
+<input type="text" id="margin" name="margin" size="8" value="20" />px
+<input type="button" value="set" onclick="theElement.style.margin = document.cssForm.margin.value+'px';" />
+
+<br /><br />
+
+
+
+<strong>Height:</strong>
+
+<input type="text" id="height" name="height" value="100px" size="3" /> &nbsp;&nbsp;
+
+
+
+<strong>Width:</strong>
+
+<input type="text" id="width" name="width" value="100px" size="3" /> &nbsp;&nbsp;
+
+<input type="button" value="set" onclick="theElement.style.height =
+
+ document.cssForm.height.value; theElement.style.width =
+
+ document.cssForm.width.value;" />
+
+
+
+<br /><br />
+
+<strong>Top:</strong>
+
+<input type="text" id="top" name="top" value="100px" size="3" /> &nbsp;&nbsp;
+
+<strong>Left:</strong>
+
+<input type="text" id="left" name="left" value="100px" size="3" /> &nbsp;&nbsp;
+
+<input type="button" value="Set"
+
+ onclick="theElement.style.position='absolute';theElement.style.top =
+
+ document.cssForm.top.value; theElement.style.left = document.cssForm.left.value;"
+
+ />
+
+<br /><br />
+
+<strong>Visibility</strong> &nbsp;&nbsp;
+
+<input type="button" value="show" onclick="theElement.style.visibility='visible';" />
+<input type="button" value="hide" onclick="theElement.style.visibility='hidden';" />
+
+<strong>Display</strong> &nbsp;&nbsp;
+
+<input type="button" value="block" onclick="theElement.style.display='block';" />
+<input type="button" value="none" onclick="theElement.style.display='none';" />
+
+
+</form>
+
+<hr />
+<script src="../supporto/progettoweb.js"></script>
+</body>
+</html>

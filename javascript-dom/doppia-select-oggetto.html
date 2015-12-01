@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>Esempio caricamento doppia select</title>
+		<script type="text/javascript">
+		/* oggetto comune */
+		function Comune(c, n, cp, np) {
+			this.codice = c;
+			this.nome = n;
+			this.codiceProvincia = cp;
+			this.nomeProvincia = np;
+		}	
+		
+		/* oggetto lista comuni */
+		function Comuni() {
+			this.comuni=new Array();
+			this.addComune("0001","Bologna","BO","Bologna");
+			this.addComune("0002","Casalecchio di Reno","BO","Bologna");
+			this.addComune("0003","San Lazzaro di Savena","BO","Bologna");
+			this.addComune("0004","Ferrara","FE","Ferrara");
+			this.addComune("0005","Cento","FE","Ferrara");
+			this.addComune("0008","Argenta","FE","Ferrara");
+			this.addComune("0006","Modena","MO","Modena");
+			this.addComune("0009","Carpi","MO","Modena");
+			this.addComune("0007","Vignola","MO","Modena");
+		}
+		
+		Comuni.prototype.addComune = _addComune;
+		Comuni.prototype.elencoComuni = _elencoComuni;
+		
+		
+		function _addComune(c, n, cp, np) {
+			this.comuni[this.comuni.length] = new Comune(c, n, cp, np);
+		}
+		
+		function _elencoComuni(cp) {
+			var risultato = new Array();
+			
+			for (i=0;i<this.comuni.length;i++) {
+				if (this.comuni[i].codiceProvincia == cp) {
+					pos = risultato.length
+					risultato[pos] = new Array();
+					risultato[pos][0] = this.comuni[i].codice;
+					risultato[pos][1] = this.comuni[i].nome;
+				}
+			}
+		  return risultato;
+		}	
+		/* fine dichiarazioni */
+
+		var ec = new Comuni();
+
+		function loadComuni(f) {
+			f.comune.disabled=true;
+			var cp = f.provincia.options[f.provincia.selectedIndex].value;
+			
+			var elenco = ec.elencoComuni(cp);
+			if (elenco.length > 0) {
+				loadSelect(f.comune, elenco);
+				f.comune.disabled=false;
+			}
+
+		}
+
+
+
+		function loadSelect(combo,dati) {
+			var opt;
+			
+			combo.options.length = 1;
+			
+			for (i=0; i< dati.length; i++) {
+				opt = new Option();
+				opt.value = dati[i][0];
+				opt.text = dati[i][1];
+				
+				combo.options[combo.options.length]=opt;
+			}
+			
+		}
+
+		</script>
+		
+		<style type="text/css">
+		</style>
+	</head>
+	<body>
+
+		<form action="" method="get">
+			<label for="provincia">Provincia:</label>
+			<select name="provincia" onchange="loadComuni(this.form);">
+				<option value=""></option>
+				<option value="BO">BOLOGNA</option>
+				<option value="FE">FERRARA</option>
+				<option value="MO">MODENA</option>
+			</select>
+			
+			<label for="comune">Comune:</label>
+			<select name="comune">
+				<option value=""></option>
+			</select>			
+		</form>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<h1>Location e querystring</h1>
+
+<form action="" method="get">
+<input type="text" placeholder="testo da inviare" name="testo">
+<input type="submit" value="invia">
+</form>
+
+<button onclick="report()">cosa abbiamo spedito?</button>
+<script>
+function getArgs() {
+  var args= new Object();
+  var query = location.search.substring(1);
+  var pairs = query.split("&");
+  for(var i=0; i < pairs.length; i++) {
+    var pos = pairs[i].indexOf('=');
+	if (pos == -1) continue;
+	var argname=pairs[i].substring(0,pos);
+	var value = pairs[i].substring(pos+1);
+	args[argname] = unescape(value);
+  }
+  return args;
+}
+
+function report() {
+var args = getArgs();
+mylog(args.testo);
+mylog('location: ' + JSON.stringify(location));
+}
+</script>
+
+<script src="../supporto/progettoweb.js"></script>
+</html>

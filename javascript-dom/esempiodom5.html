@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<title>Class Warfare</title>
+
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+
+<style type="text/css">
+
+<!--
+
+  body   {background-color: white; color: black;}
+
+ .style1, .style4 {color: blue; font-weight: bold;}
+
+ .style2, .style4:hover {background-color: yellow; color: red;
+
+          text-decoration: underline;}
+
+ .style3 {color: red; font-size: 300%;}
+
+-->
+
+</style>
+
+</head>
+
+<body>
+<h1>Effetti di mouse over</h1>
+<p class="style1" 
+   onmouseover="this.className='style2';"
+   onmouseout="this.className = 'style1';">Roll over me</p>
+
+
+
+<p>How about 
+
+<span class="style2" onmouseover="this.className='style1';"
+                     onmouseout="this.className= 'style2';">me</span>?</p>
+
+
+
+<p> Be careful as dramatic style changes may
+
+<span class="style1" 
+      onmouseover="this.className = 'style3';"
+      onmouseout="this.className = 'style1';">reflow a document</span>
+
+significantly</p>
+
+<p class="style4">Roll over me (pseudoclasses)</p>
+
+</body>
+
+</html>
