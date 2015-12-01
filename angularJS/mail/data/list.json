@@ -1,0 +1,32 @@
+[
+{
+	"id": 0, 
+	"unread" : true,
+	"sender": "jean@somecompany.com", 
+	"subject": "Hi there, old friend",
+	"date": "2013-12-07 12:32:00", 
+	"recipients": ["greg@somecompany.com"],
+	"message": "Hey, we should get together for lunch sometime and catch up.There are many things we should collaborate on this year."
+}, 
+{
+	"id": "1", 	"unread" : true,
+  "sender": "maria@somecompany.com",
+	"subject": "Where did you leave my laptop?",
+	"date": "2013-12-07 08:15:12", "recipients": ["greg@somecompany.com"],
+	"message": "I thought you were going to put it in my desk drawer.But it does not seem to be there."
+}, 
+{
+	"id": "2", 
+	"unread" : false,
+	"sender": "bill@somecompany.com", "subject": "Lost python",
+	"date": "2013-12-06 20:35:02", "recipients": ["greg@somecompany.com"],
+	"message": "Nobody panic, but my pet python is missing from her cage. She doesn\"t move too fast, so just call me if you see her."
+},
+{
+	"id": "3", 
+	"unread" : false,
+	"sender": "bill@somecompany.com", "subject": "Lost tiger",
+	"date": "2015-12-01 20:35:02", "recipients": ["greg@somecompany.com"],
+	"message": "Nobody panic, but my small tiger is missing from her cage. She moves very fast, so just run if you see her."
+}
+]

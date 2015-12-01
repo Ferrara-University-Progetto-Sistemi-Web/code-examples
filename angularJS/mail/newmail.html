@@ -1,0 +1,11 @@
+<form name='newMailForm' ng-controller="NewMailController">
+<div>Subject:<br>
+<input name="subject" ng-model='newmail.subject' size="100" required ></div>
+<div>To:<br>
+<input type="email" name="to" ng-model='newmail.to' size="100" required ></div>
+<div>Text:<br>
+<textarea name="text" ng-model='newmail.text' cols="80" ></textarea></div>
+<button ng-click='newMail()' ng-disabled='!newMailForm.$valid'>Submit</button>
+
+<div ng-show='message'>{{message}}</div>
+</form>

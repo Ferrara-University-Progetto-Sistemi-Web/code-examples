@@ -1,0 +1,18 @@
+
+<h2>Posta in arrivo</h2>
+<a href="#/newmail">new message</a>
+
+<table>
+<tr>
+<th ng-click='orderby("sender")'>Sender</th>
+<th ng-click='orderby("subject")'>Subject</th>
+<th ng-click='orderby("date")'>Date</th>
+<th>Unread</th>
+</tr>
+<tr ng-class="{unread: message.unread}" ng-repeat='message in messages | orderBy: sort '>
+<td>{{message.sender}}</td>
+<td><a href='#/view/{{message.id}}'>{{message.subject}}</a></td>
+<td>{{message.date}}</td>
+<td>{{message.unread}}</td>
+</tr>
+</table>

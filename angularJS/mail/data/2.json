@@ -1,0 +1,6 @@
+
+{
+	"id": "2", "sender": "bill@somecompany.com", "subject": "Lost python",
+	"date": "Dec 6, 2013 20:35:02", "recipients": ["greg@somecompany.com"],
+	"message": "Nobody panic, but my pet python is missing from her cage. She doesn\"t move too fast, so just call me if you see her."
+}
